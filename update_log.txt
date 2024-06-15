@@ -1,0 +1,6 @@
+CURRENTLY WORKING ON:
+
+Mat: DEVELOPING FLASK WEBSITE FOR THE PROJECT
+Added templates 
+(Add Git (to preserve history of changes))
+
