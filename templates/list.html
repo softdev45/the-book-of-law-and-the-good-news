@@ -1,0 +1,17 @@
+
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}List{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<section>
+  <ul style="list-style-type: none;">
+    {% for item in data %}
+      <li>{{ item }}</li>
+    {% endfor %}
+  </ul>
+  
+</section>
+{% endblock %}

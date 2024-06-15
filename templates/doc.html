@@ -1,0 +1,23 @@
+
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}List{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<section>
+  <img src="{{ url_for('static', filename='team_work_template_project.svg') }}" alt="My SVG Image" style="object-fit:contain;">
+</section>
+<section>
+  
+      Proponuję zorganizować spotkanie na temat: jak dalej prowadzimy prace projektowe. każdy będzie mógł przedstawić swoje oczekiwania.
+  <br>
+    <div style="font-weight:bold;">
+      propozycja do rozważenia na spotkaniu:<br>
+      kazdy projektuje wlasny /endpoint
+    </div>
+
+</section>
+{% endblock %}
+

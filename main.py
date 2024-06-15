@@ -1,7 +1,10 @@
+import datetime
 import os
 import time
 
-from flask import Flask
+from flask import Flask, render_template, request
+from flask.helpers import redirect
+
 from receiver import Receiver
 
 title = os.environ['Title'] = 'DEV_MODE'
@@ -14,8 +17,26 @@ app = Flask(__name__)
 # would like an app to: display current time [mat]
 
 
+@app.route('/doc')
+def doc():
+    return render_template('doc.html')
+
+
+@app.route('/receiver/receive', methods=['POST'])
+def handle_data():
+    data = request.form['text_data']
+
+    receiver = Receiver('text_data')
+    receiver.receive(data)
+
+    return f'Hello, {data}! Your data was submitted successfully.\
+    <a href="/receiver">Receiver</a>'
+
+
 @app.route('/')
 def index():
+    #DEV: temporarily: redirect root path (/) to /receiver
+    return redirect('/receiver')
     return f'Welcome to this website.<br/>\
     # Current title: {title}<br/>\
     page loaded at: {time.time()} '
@@ -23,11 +44,17 @@ def index():
     # Question (Task): what does time() function return?
 
 
-@app.route('/receiver')
+@app.route('/receiver', methods=['GET'])
 def receiver_endpoint():
-    receiver = Receiver('ear')
-    receiver.receive(input())
-    return 'Not yet implemented'
+
+    return render_template('receiver.html')
+
+
+@app.route('/list', methods=['GET'])
+def messages():
+    with open('text_data_db.txt', 'r') as db:
+        data = db.readlines()
+    return render_template('list.html', data=reversed(data))
 
 
 if __name__ == '__main__':
