@@ -1,21 +1,88 @@
 <!doctype html>
+<head>
 <title>{% block title %}{% endblock %} - Flaskr</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      width: 100%;
+      height: 100vh;
+      background: linear-gradient(220deg,#95baa8, whitesmoke, #a8c2c0);
+      background-size: 300% 300%;
+      animation: move-bg 13s linear infinite;
+    }
+    @keyframes move-bg {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+  </style>
+  
+</head>
+
+<body>
 <nav>
   <div>
-    <a href="/receiver">Receiver</a>
-    <a href="/list">List</a>
-    <a href="/doc">Doc</a>
+    <!-- <div class="text-light">
+      service
+    </div> -->
+    
+    <div>
+     <a href="/receiver">Submit to</a>
+    </div>
+    <div>
+      <a href="/list">Task List/ Backlog</a>
+    </div>
+    <div>
+      <a href="/plan">Planning</a>
+    </div>
   </div>
 
-  
 </nav>
 <section class="content">
-  <header>
+  <header class="mx-4">
     {% block header %}{% endblock %}
   </header>
-  {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-  {% block content %}{% endblock %}
+  <section class="container border">
+    {% for message in get_flashed_messages() %}
+      <div class="flash">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+  </section>
+
 </section>
+  <script>
+    // Select all div elements
+    // const divs = document.querySelectorAll('div');
+    const elems = document.querySelectorAll('*')
+
+    // Loop through each div
+    for (const elem of elems) {
+      // Create a new label element
+      const label = document.createElement('span')//'<span style="color: green;">div</span>');
+
+      // Set the label text (optional, customize as needed)
+      label.textContent = ''+elem.tagName;
+      label.style="color: #78cc78;"
+
+      // Optionally, associate the label with the div using for attribute (if applicable)
+      // label.setAttribute('for', div.id); // Replace 'id' with the div's unique identifier
+
+      // Append the label element as a child of the current div
+      // div.appendChild(label);
+      elem.insertBefore(label, elem.firstChild);
+    }
+  </script>
+</body>

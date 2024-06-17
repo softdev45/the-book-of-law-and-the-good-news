@@ -1,0 +1,4 @@
+MVC - Model View Controller - pattern/wzorzec
+Model - Dane 
+View - wygląd aplikacji / frontend / strona, z której korzysta użytkownik
+Controller - kod, który tym steruje

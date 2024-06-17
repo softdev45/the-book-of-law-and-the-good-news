@@ -2,17 +2,17 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Receiver{% endblock %}</h1>
+  <h1>{% block title %}Service Data Submission{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-<section>
+
   <div>
-    Please, provide text data:
+    Please, provide text data/feedback:
   </div>
   <form method="POST" action="/receiver/receive">
     <input name="text_data"/> 
     <input type='submit'/>
   </form>
-</section>
+
 {% endblock %}

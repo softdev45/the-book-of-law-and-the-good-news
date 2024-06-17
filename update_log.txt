@@ -2,6 +2,8 @@ CURRENTLY WORKING ON:
 
 PROJECTS_DESCRIPTION:
 CREATE WEB APP TO RECEIVE REQUEST FROM CLIENTS 
+https://342bce2f-0783-4e6b-9ec6-93a85eb6ef41-00-31k7t9fkfdi3t.kirk.replit.dev/list
+
 
 Mat: DEVELOPING FLASK WEBSITE FOR THE PROJECT
 [Added templates][done] 
@@ -15,9 +17,9 @@ TASKLOG / TODO List:
    
 2. [issue2] use Receiver class to handle writing text_data to file [done]
 
-3. [issue3] add <nav> navigation menu to /list page: solution: create template and exten base.html
+3. [issue3] add <nav> navigation menu to /list page: solution: create template and extend base.html
 
-
+[issue4] fix double menu on /list 
 
 
 Proponuję zorganizować spotkanie na temat: jak dalej prowadzimy prace projektowe. każdy będzie mógł przedstawić swoje oczekiwania.

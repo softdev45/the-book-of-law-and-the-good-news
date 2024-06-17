@@ -7,17 +7,9 @@
 
 {% block content %}
 <section>
+  <img src="{{ url_for('static', filename='project_s_lifecycle_rescaled_to_fit.svg') }}" alt="My SVG Image" style="object-fit:contain;">
   <img src="{{ url_for('static', filename='team_work_template_project.svg') }}" alt="My SVG Image" style="object-fit:contain;">
 </section>
-<section>
-  
-      Proponuję zorganizować spotkanie na temat: jak dalej prowadzimy prace projektowe. każdy będzie mógł przedstawić swoje oczekiwania.
-  <br>
-    <div style="font-weight:bold;">
-      propozycja do rozważenia na spotkaniu:<br>
-      kazdy projektuje wlasny /endpoint
-    </div>
 
-</section>
 {% endblock %}
 

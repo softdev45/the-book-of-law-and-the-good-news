@@ -1,0 +1,98 @@
+body {
+  font-family: monospace;
+}
+
+nav div {
+  background-color: black;
+  padding: 10px;
+  margin-left: 10px;
+  display: inline-block;
+  border-right-style: dotted;
+  border-right-color: white;
+  border-right-width: 1px;
+  /* width: 200px; */
+  display: flex; flex-direction: row;
+}
+nav div div:hover {
+  background-color: #404040; 
+}
+nav div:hover {
+  background-color: #b0b0b0; 
+}
+/* nav div:first-child  div {
+  background-color: black;
+  color: white;
+}*/
+
+nav div div {
+  width: 300px;
+}
+
+nav div div a {
+  color: white;
+}
+
+div {
+  border-style: dotted;
+  border-color: white;
+  border-width: 1px;
+
+  display:flex;
+  flex-direction: column;
+}
+
+section {
+  display:flex;
+  flex-direction: column;
+}
+
+span {
+  border-style: dashed;
+  border-color: #aaaaaa;
+  border-width: 1px;
+  border-bottom-width: 0px;
+  border-right-width: 0px;
+}
+
+a {
+}
+
+/* nav div div:first-child {
+  background-color: black;
+  color: white;
+} 
+nav div div:first-child:hover {
+  background-color: #545454; 
+} */
+
+nav {
+  margin-bottom: 20px;
+}
+
+
+/* mouse-over:hover = color  */
+div:hover {
+  background-color: #acae84
+}
+div div:hover {
+  background-color: #dae15b
+}
+div div div:hover {
+  background-color: #f4ff29
+}
+
+input {
+  width: 400px;
+}
+/* @media screen and (max-width: 900px) {
+  div{
+      font-size: xx-large;
+      word-break: break-all;
+    
+  }
+  nav div {
+    display: flex;
+    flex-direction: column;
+  }
+
+} */

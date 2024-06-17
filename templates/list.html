@@ -6,12 +6,20 @@
 {% endblock %}
 
 {% block content %}
-<section>
-  <ul style="list-style-type: none;">
+
+  <div style="list-style-type: none;">
     {% for item in data %}
-      <li>{{ item }}</li>
+      <div class="border my-3">
+        <div class="text-secondary">
+          {{ item }}
+        </div>
+        <!-- <div>
+          {{ item[1] }}
+        </div> -->
+      </div>
     {% endfor %}
-  </ul>
+    
+  </div>
   
-</section>
+
 {% endblock %}
