@@ -9,6 +9,9 @@
 <a href="/source/b.{{ref[1]}}">
 	{{ ref[1] }}
 </a>
+<a href="/source/b.{{ref[1]}}.{{ref[2]}}">
+	{{ ref[1]}}.{{ref[2] }}
+</a>
 </div>
 <div class="verses" style="list-style-type: none">
     {% for item in data %} 
@@ -21,13 +24,22 @@
 					<div>{{item.text}}</div> 
 					{% endif %}
 
+					
 					{% if words  %}
+					<div class="lookup-words">
 						{% for word in words %} 
-						<div>{{word}}</div> 
+						<div class="lookup-word"><small>{{word[0]}}</small></div> 
+
+						{% for verseX in word[1] %} 
+						<div><i>{{verseX[0]}}</i></div> 
+						<div><a href="/source/{{verseX[1]}}">{{verseX[1]}}</a></div> 
 						{% endfor %}
+
+						{% endfor %}
+					</div>
 					{% endif %}
 
-					{% if show_verses  %}
+					{% if show_verses and verse %}
 					<div><a href="/look_up/{{item['attrib'].id}}">Drink</a><span>{{verse.fire}}</span></div> 
 					{% endif %}
 				</div>

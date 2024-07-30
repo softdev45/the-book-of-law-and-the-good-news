@@ -82,9 +82,23 @@ div div:hover {
 div div div:hover {
     background-color: #fefff0;
 }
+div div div div:hover {
+    background-color: #f1eee7;
+}
+div div div div div:hover {
+    background-color: #f7f6f4;
+}
+
+.lookup-word {
+	background-color: #bba9f0;
+}
 
 .verses div {
 	font-size: xxx-large;
+}
+
+.lookup-words div {
+	font-size: x-large;
 }
 
 .ref-nav a {

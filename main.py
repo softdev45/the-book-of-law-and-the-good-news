@@ -77,16 +77,21 @@ def estimate_freq_index(word):
 	return 0
 
 
-def word_search(word):
+def word_search(ref, word):
 	# ns = {"re": "http://exslt.org/regular-expressions"}	
-	xpath_expression = f".//seg[@type='verse'][contains(text(),'{word}')]"
+	xpath_expression = f".//seg[@type='verse'][contains(text(),'{word}')]"#[not(contains(@id, '{ref}'))]"
+	#TODO fix search
 	print(xpath_expression)
 	locations = root.xpath(xpath_expression)#, namespaces=ns)
+	#todo fix
+	locations = list(filter(lambda l: word in l.text.lower().split(), locations))
 	print('word search', word, locations)
+	if len(locations) == 0:
+		return []
 	print(locations[0].attrib)
 	locations = list(map(lambda l: (l.text, l.attrib['id']), locations))
 	#impl rndmizr
-	return locations[:5]
+	return locations[:10]
 				
 
 @app.route('/source/<ref>')
@@ -117,14 +122,16 @@ def living_water(ref=None):
 		while result is None:
 			result = map(lambda word: estimate_freq_index(word), words)
 		words = list(result)
+		words = list(set(words))
 		words = sorted(words, key = lambda e: e[1])
 		print(words)
-		words = words[0:3]
+		words = words[0:5]
 
 
 		print('#1')
 		print(words)
-		words = list(map(lambda word: (word[0], word_search(word[0])), words))
+		words = list(map(lambda word: (word[0], word_search(ref, word[0])), words))
+		words = filter(lambda word: len(word[1])>0, words)
 		words = sorted(words, key = lambda e: len(e[1]))
 		
 		with SessionLocal() as db:
