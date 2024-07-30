@@ -4,15 +4,30 @@ import time
 
 from flask import Flask, render_template, request
 from flask.helpers import redirect
-from flask_sqlalchemy import SQLAlchemy
+from wtforms.fields.simple import TextAreaField
+from wtforms_alchemy import ModelForm
+# from flask_wtf import FlaskForm
+# import wtforms
+# :
 
-# from receiver import Receiver, Request
 from db import Request, SessionLocal
+
+from flask_migrate import Migrate
+
+import xml.etree.ElementTree as ET
+from lxml import etree
 
 title = os.environ['Title'] = 'DEV_MODE'
 # os.environ.get('Title')
 
 app = Flask(__name__)
+
+# with open('bible2.xml', 'r') as bible:
+	# data = bible.read()
+root = etree.parse('bible2.xml')
+	# root = ET.fromstring(data)
+
+
 # db = get_db()
 # db = SQLAlchemy(app)
 # os.environ
@@ -20,36 +35,113 @@ app = Flask(__name__)
 # are there any feature requests?
 # would like an app to: display current time [mat]
 
+class RequestForm(ModelForm):
+	# request_data = TextAreaField('request_data')
+	class Meta:
+		model = Request
 
 def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+	db = SessionLocal()
+	try:
+		yield db
+	finally:
+		db.close()
+
+migrate = Migrate(app, get_db())
 
 
 @app.route('/plan')
 def doc():
     return render_template('doc.html')
 
+# @app.route('/source_of_living_water/<book>/<chapter>/<verse>')
+# @app.route('/source_of_living_water/<book>/<chapter>')
+# @app.route('/source_of_living_water/<book>')
+@app.route('/source_of_living_water/<ref>')#/<book>/<chapter>/<verse>')
+@app.route('/source_of_living_water')#/<book>/<chapter>/<verse>')
+def living_water(ref=None):
+	# def living_water():
+	book = verse = chapter = None
+	if ref:
+		ref=ref.split('.')
+		book = ref[1] if len(ref) >1 else None
+		chapter = ref[2] if len(ref)>2 else None
+		verse = ref[3] if len(ref)>3 else None
+	show_verses=False
 
-@app.route('/receiver/receive', methods=['POST'])
-def handle_data():
-    data = request.form['text_data']
-    if data:
+	if verse:
+		show_verses=True
+		xpath_expression = f".//seg[@type='verse'][@id='b.{book}.{chapter}.{verse}']"
+		elements = root.xpath(xpath_expression)
+		print(elements)
+		# return render_template('verses.html', data = elements, show_verses=True)
+	elif chapter:
+		show_verses=True
+		xpath_expression = f".//seg[@type='verse'][starts-with(@id,'b.{book}.{chapter}')]"
+		elements = root.xpath(xpath_expression)
+		print(elements)
+		# return render_template('verses.html', data = elements, show_verses=True)
+	elif book:
+		print(book)
+		xpath_expression = f".//div[@type='chapter'][starts-with(@id,'b.{book}')]"
+		elements = root.xpath(xpath_expression)
+		# return render_template('verses.html', data = elements)
+	else:
+		xpath_expression = f".//div[@type='book']"
+		elements = root.xpath(xpath_expression)
+
+		
+
+	return render_template('verses.html', data = elements, show_verses=show_verses, ref=ref)
+	# return render_template('verses.html', data = elements)
+	
+
+@app.route('/request/create', methods=['POST'])
+def create_request():
+    # data = request.form['text_data']
+    form = RequestForm(request.form)
+    if True:
         #TODO
         with SessionLocal() as db:
-            new_req = Request(data=data)
+            new_req = Request()
+            form.populate_obj(new_req)
             db.add(new_req)
             db.commit()
         # receiver = Receiver('text_data')
         # receiver.receive(data)
 
     return redirect('/list')
-    return f'Hello, {data}! Your data was submitted successfully.\
-    <a href="/receiver">Receiver</a>'
+    # return f'Hello, {data}! Your data was submitted successfully.\
+    # <a href="/receiver">Receiver</a>'
+    
+@app.route('/request/delete/<id>', methods=['POST'])
+def remove_request(id):
+	# data = request.form['text_data']
+	form = RequestForm(request.form)
+	with SessionLocal() as db:
+		r = db.query(Request).get(id)
+		# new_req = Request()
+		# form.populate_obj(r)
+		# db.delete(r)
+		# db.commit()
+	return redirect('/list')
 
+@app.route('/request/update/<id>', methods=['PUT'])
+def handle_data2(id):
+	# data = request.form['text_data']
+	form = RequestForm(request.form)
+	if True:
+		#TODO
+		with SessionLocal() as db:
+			r = db.query(Request).get(id)
+			# new_req = Request()
+			form.populate_obj(r)
+			db.add(r)
+			db.commit()
+		# receiver = Receiver('text_data')
+		# receiver.receive(data)
+
+	return redirect('/list')
 
 @app.route('/')
 def index():
@@ -64,8 +156,14 @@ def index():
 
 @app.route('/receiver', methods=['GET'])
 def receiver_endpoint():
+    form = RequestForm()
+    return render_template('receiver.html', form=form)
 
-    return render_template('receiver.html')
+
+@app.route('/revelation', methods=['GET'])
+def revelation():
+
+    return render_template('revelation.html')
 
 
 @app.route('/list', methods=['GET'])
@@ -74,11 +172,12 @@ def messages():
     #     db.readline()
     #     data = db.readlines()
     #     result = [(data[i], data[i + 1]) for i in range(0, len(data) - 1, 2)]
+    # form = ModelForm()
     result = []
     with SessionLocal() as db:
         result = db.query(Request).all()
         print(result)
-    return render_template('list.html', data=reversed(result))
+    return render_template('list.html', data=reversed(result))#, form = form)
 
 
 if __name__ == '__main__':

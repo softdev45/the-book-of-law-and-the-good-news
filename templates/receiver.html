@@ -1,18 +1,17 @@
-
-{% extends 'base.html' %}
-
+{% extends 'base.html' %} 
 {% block header %}
-  <h1>{% block title %}Service Data Submission{% endblock %}</h1>
-{% endblock %}
+<h1>{% block title %}Service Data Submission{% endblock %}</h1>
+{% endblock %} {% block content %}
 
-{% block content %}
+<div class="my-3">Please, provide text data to feed-forward your request:</div>
+<form method="POST" action="/request/create">
+    <!-- <textarea name="text_data"/> </textarea> -->
+    {{ form.csrf_token }} {% for field in form if not field.name in
+    ["csrf_token","verified"] %}
+    <p>{{ field.label }}: {{ field }} <b>{{ " ".join(field.errors) }}</b></p>
+    {% endfor %}
 
-  <div>
-    Please, provide text data/feedback:
-  </div>
-  <form method="POST" action="/receiver/receive">
-    <input name="text_data"/> 
-    <input type='submit'/>
-  </form>
+    <input type="submit" />
+</form>
 
 {% endblock %}

@@ -1,0 +1,110 @@
+
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Revelation of The Truth : Jesus Christ{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+
+<!-- <div id='joystick'>
+  <button >left</button>
+  <button>left</button>
+  <button>left</button>
+  <button>left</button>          
+</div> -->
+
+<svg id="svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" width="" height="" viewBox="0 0 25 25" version="1.1" inkscape:version="1.3.2 (091e20ef0f, 2023-11-25, custom)"  xml:space="preserve" style="overflow:hidden;">
+  <image xlink:href="https://upload.wikimedia.org/wikipedia/commons/b/b6/Revelation.svg" 
+         id='imagesvg' style="overflow:hidden;"
+         
+       >
+  </image>
+  
+</svg>
+
+<script>
+  const svg = document.getElementById('svg');
+  const image = document.getElementById('imagesvg');
+  let viewBoxCoords = {x: 45, y: 75, width:25, height: 25}; // Adjust initial viewBox values
+
+  svg.setAttribute('viewBox', `${viewBoxCoords.x} ${viewBoxCoords.y} ${viewBoxCoords.width} ${viewBoxCoords.height}`);
+
+  document.addEventListener('keydown', handleKeyDown);
+
+  function handleKeyDown(event) {
+    const key = event.key.toLowerCase();
+    const step = 5; // Adjust movement step size
+    const zoom = 5;
+
+    switch (key) {
+      case 'arrowup':
+        viewBoxCoords.y -= step;
+        break;
+      case 'arrowdown':
+        viewBoxCoords.y += step;
+        break;
+      case 'arrowleft':
+        viewBoxCoords.x -= step;
+        break;
+      case 'arrowright':
+        viewBoxCoords.x += step;
+        break;
+      case '-':
+        viewBoxCoords.width += zoom;
+        viewBoxCoords.height += zoom;
+        break;
+      case '=':
+        // Prevent negative values for width and height
+        viewBoxCoords.width = Math.max(viewBoxCoords.width - zoom, 0);
+        viewBoxCoords.height = Math.max(viewBoxCoords.height - zoom, 0);
+        break;
+    }
+    console.log(viewBoxCoords)
+    svg.setAttribute('viewBox', `${viewBoxCoords.x} ${viewBoxCoords.y} ${viewBoxCoords.width} ${viewBoxCoords.height}`);
+    image.setAttribute('viewBox', `${viewBoxCoords.x} ${viewBoxCoords.y} ${viewBoxCoords.width} ${viewBoxCoords.height}`);
+  }
+
+  function handleKey2(key) {
+    const step = 5; // Adjust movement step size
+    const zoom = 5;
+
+    switch (key) {
+      case 'arrowup':
+        viewBoxCoords.y -= step;
+        break;
+      case 'arrowdown':
+        viewBoxCoords.y += step;
+        break;
+      case 'arrowleft':
+        viewBoxCoords.x -= step;
+        break;
+      case 'arrowright':
+        viewBoxCoords.x += step;
+        break;
+      case '-':
+        viewBoxCoords.width += zoom;
+        viewBoxCoords.height += zoom;
+        break;
+      case '=':
+        // Prevent negative values for width and height
+        viewBoxCoords.width = Math.max(viewBoxCoords.width - zoom, 0);
+        viewBoxCoords.height = Math.max(viewBoxCoords.height - zoom, 0);
+        break;
+    }
+    console.log(viewBoxCoords)
+    svg.setAttribute('viewBox', `${viewBoxCoords.x} ${viewBoxCoords.y} ${viewBoxCoords.width} ${viewBoxCoords.height}`);
+  }
+											
+	function isChrome() {
+  // Check for Chrome in the user agent string
+  return navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+}
+
+if (!isChrome()) {
+  alert("Please use Google Chrome to access this site.\nSome features may not work in other browsers.");
+} 
+</script>
+{% endblock %}
+

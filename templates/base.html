@@ -1,23 +1,24 @@
 <!doctype html>
 <head>
-<title>{% block title %}{% endblock %} - Flaskr</title>
+<title>{% block title %}{% endblock %} - @ Public Webservice: Software Engeneering</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
   <style>
-    * {
+    /* * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-    }
+    } */
     body {
-      width: 100%;
+      /* width: 100%;
       height: 100vh;
-      background: linear-gradient(220deg,#95baa8, whitesmoke, #a8c2c0);
-      background-size: 300% 300%;
-      animation: move-bg 13s linear infinite;
+      zoom: 100%; */
+      /* background: linear-gradient(220deg,#454448, whitesmoke, #a8c2c0); */
+      /* background-size: 300% 300%; */
+      /* animation: move-bg 13s linear infinite; */
     }
-    @keyframes move-bg {
+    /* @keyframes move-bg {
       0% {
         background-position: 0% 50%;
       }
@@ -26,7 +27,7 @@
       }
       100% {
         background-position: 0% 50%;
-      }
+      } */
     }
   </style>
   
@@ -40,13 +41,19 @@
     </div> -->
     
     <div>
-     <a href="/receiver">Submit to</a>
+     <a href="/receiver">send(data)</a>
     </div>
     <div>
-      <a href="/list">Task List/ Backlog</a>
+      <a href="/list">view(result)</a>
     </div>
     <div>
-      <a href="/plan">Planning</a>
+      <a href="/plan">process(plan)</a>
+    </div>
+    <div>
+      <a href="/source_of_living_water">source</a>
+    </div>
+    <div>
+      <a href="/revelation">revelation</a>
     </div>
   </div>
 
@@ -64,25 +71,6 @@
 
 </section>
   <script>
-    // Select all div elements
-    // const divs = document.querySelectorAll('div');
-    const elems = document.querySelectorAll('*')
 
-    // Loop through each div
-    for (const elem of elems) {
-      // Create a new label element
-      const label = document.createElement('span')//'<span style="color: green;">div</span>');
-
-      // Set the label text (optional, customize as needed)
-      label.textContent = ''+elem.tagName;
-      label.style="color: #78cc78;"
-
-      // Optionally, associate the label with the div using for attribute (if applicable)
-      // label.setAttribute('for', div.id); // Replace 'id' with the div's unique identifier
-
-      // Append the label element as a child of the current div
-      // div.appendChild(label);
-      elem.insertBefore(label, elem.firstChild);
-    }
   </script>
 </body>

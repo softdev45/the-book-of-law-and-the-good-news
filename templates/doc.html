@@ -2,13 +2,14 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}List{% endblock %}</h1>
+  <h1>{% block title %}Doc{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
 <section>
+  <img src="{{ url_for('static', filename='BloodOfChrist.png') }}" alt="Blood of Christ" style="object-fit:contain;">
+  <img src="{{ url_for('static', filename='gathering-together-3.svg') }}" alt="My SVG Image" style="object-fit:contain;">
   <img src="{{ url_for('static', filename='project_s_lifecycle_rescaled_to_fit.svg') }}" alt="My SVG Image" style="object-fit:contain;">
-  <img src="{{ url_for('static', filename='team_work_template_project.svg') }}" alt="My SVG Image" style="object-fit:contain;">
 </section>
 
 {% endblock %}

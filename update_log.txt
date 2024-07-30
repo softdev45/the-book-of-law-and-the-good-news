@@ -1,30 +1,10 @@
 CURRENTLY WORKING ON:
 
 PROJECTS_DESCRIPTION:
+
 CREATE WEB APP TO RECEIVE REQUEST FROM CLIENTS 
+
 https://342bce2f-0783-4e6b-9ec6-93a85eb6ef41-00-31k7t9fkfdi3t.kirk.replit.dev/list
 
-
-Mat: DEVELOPING FLASK WEBSITE FOR THE PROJECT
-[Added templates][done] 
-(Add Git (to preserve history of changes))[done]
-
 TASKLOG / TODO List:
-
-1. [issue1] text_data submitted overwites db file (text_data_db)
-   [how to fix issue1]: ??? maybe by opening file in append mode?
-   [issue1 done] fixed by changing open()'s mode to 'a+'  
-   
-2. [issue2] use Receiver class to handle writing text_data to file [done]
-
-3. [issue3] add <nav> navigation menu to /list page: solution: create template and extend base.html
-
-[issue4] fix double menu on /list 
-
-
-Proponuję zorganizować spotkanie na temat: jak dalej prowadzimy prace projektowe. każdy będzie mógł przedstawić swoje oczekiwania.
-
-propozycja do rozważenia na spotkaniu:
-
-kazdy projektuje wlasny /endpoint
 
