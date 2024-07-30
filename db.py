@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 
 
 # Define database connection details (replace with your own)
-DATABASE_URI = 'sqlite:///my_database_3.db'
+DATABASE_URI = 'sqlite:///my_database_4.db'
 
 # Create engine and session maker
 engine = create_engine(DATABASE_URI)
@@ -44,7 +44,7 @@ class Verse(Base):
 	__tablename__ = 'verse'
 	id = Column(Integer, primary_key=True)
 	location = Column(String(128), nullable=True)
-	fire = Column(Integer, primary_key=True)
+	fire = Column(Integer, default=0)
 
 
 # Create database tables (optional)

@@ -10,12 +10,14 @@ from wtforms_alchemy import ModelForm
 # import wtforms
 # :
 
-from db import Request, SessionLocal
+from db import Request, SessionLocal, Verse
 
 from flask_migrate import Migrate
 
 import xml.etree.ElementTree as ET
 from lxml import etree
+
+import re
 
 title = os.environ['Title'] = 'DEV_MODE'
 # os.environ.get('Title')
@@ -24,8 +26,17 @@ app = Flask(__name__)
 
 # with open('bible2.xml', 'r') as bible:
 	# data = bible.read()
-root = etree.parse('bible2.xml')
+root = etree.parse('bible.xml')
+# root_pl = etree.parse('polish.xml')
 	# root = ET.fromstring(data)
+from collections import OrderedDict
+
+wordstat = OrderedDict()
+with open('count_1ws.txt', 'r') as file:
+	for line in file.readlines():
+		word, freq = line.split()
+		wordstat[word] = int(freq)
+# print(wordstat.keys())
 
 
 # db = get_db()
@@ -47,38 +58,89 @@ def get_db():
 	finally:
 		db.close()
 
-migrate = Migrate(app, get_db())
+with SessionLocal() as db:
+	migrate = Migrate(app, get_db())
 
 
 @app.route('/plan')
 def doc():
     return render_template('doc.html')
 
-# @app.route('/source_of_living_water/<book>/<chapter>/<verse>')
-# @app.route('/source_of_living_water/<book>/<chapter>')
-# @app.route('/source_of_living_water/<book>')
-@app.route('/source_of_living_water/<ref>')#/<book>/<chapter>/<verse>')
-@app.route('/source_of_living_water')#/<book>/<chapter>/<verse>')
+def estimate_freq_index(word):
+	print('estimate: ', word)
+	while word:
+		print(word)
+		if word not in wordstat.keys():
+			word = word[:-1]
+		else:
+			return (word, wordstat[word])
+	return 0
+
+
+def word_search(word):
+	# ns = {"re": "http://exslt.org/regular-expressions"}	
+	xpath_expression = f".//seg[@type='verse'][contains(text(),'{word}')]"
+	print(xpath_expression)
+	locations = root.xpath(xpath_expression)#, namespaces=ns)
+	print('word search', word, locations)
+	print(locations[0].attrib)
+	locations = list(map(lambda l: (l.text, l.attrib['id']), locations))
+	#impl rndmizr
+	return locations[:5]
+				
+
+@app.route('/source/<ref>')
+@app.route('/source')
 def living_water(ref=None):
-	# def living_water():
-	book = verse = chapter = None
+	book = verse = chapter = words =steps= None
 	if ref:
-		ref=ref.split('.')
-		book = ref[1] if len(ref) >1 else None
-		chapter = ref[2] if len(ref)>2 else None
-		verse = ref[3] if len(ref)>3 else None
+		fire(ref)
+		steps=ref.split('.')
+		book = steps[1] if len(steps) >1 else None
+		chapter = steps[2] if len(steps)>2 else None
+		verse = steps[3] if len(steps)>3 else None
 	show_verses=False
 
 	if verse:
 		show_verses=True
 		xpath_expression = f".//seg[@type='verse'][@id='b.{book}.{chapter}.{verse}']"
 		elements = root.xpath(xpath_expression)
-		print(elements)
+		v : str= elements[0].text
+		# words = v.strip().lower().split('')
+		 # Regular expression to match words (alphanumeric characters)
+		word_pattern = r'\w+'
+		# Find all matches of the word pattern in the sentence
+		words = re.findall(word_pattern, v)
+		words = [word.lower() for word in words]
+
+		result = None
+		while result is None:
+			result = map(lambda word: estimate_freq_index(word), words)
+		words = list(result)
+		words = sorted(words, key = lambda e: e[1])
+		print(words)
+		words = words[0:3]
+
+
+		print('#1')
+		print(words)
+		words = list(map(lambda word: (word[0], word_search(word[0])), words))
+		words = sorted(words, key = lambda e: len(e[1]))
+		
+		with SessionLocal() as db:
+			for elem in elements:
+				if elem is not None:
+					verse = db.query(Verse).filter_by(location='.'.join(steps)).first()			
+			print(elements)
 		# return render_template('verses.html', data = elements, show_verses=True)
 	elif chapter:
 		show_verses=True
 		xpath_expression = f".//seg[@type='verse'][starts-with(@id,'b.{book}.{chapter}')]"
 		elements = root.xpath(xpath_expression)
+		with SessionLocal() as db:
+			for elem in elements:
+				if elem:
+					verse = db.query(Verse).filter_by(location='.'.join(steps)).first()			
 		print(elements)
 		# return render_template('verses.html', data = elements, show_verses=True)
 	elif book:
@@ -90,11 +152,33 @@ def living_water(ref=None):
 		xpath_expression = f".//div[@type='book']"
 		elements = root.xpath(xpath_expression)
 
-		
-
-	return render_template('verses.html', data = elements, show_verses=show_verses, ref=ref)
+	return render_template('verses.html', data = elements, show_verses=show_verses, ref=steps, verse=verse, words=words)
 	# return render_template('verses.html', data = elements)
-	
+
+
+def fire(ref):
+	with SessionLocal() as db:
+		refed = db.query(Verse).filter_by(location=ref).first()
+		print('found verse:')
+		print(refed)
+		if not refed:
+			refed = Verse(location=ref, fire=0	)
+		print('adding fire:')
+		print(refed)
+		if refed:
+			refed.fire += 1
+			db.add(refed)
+			db.commit()
+
+
+@app.route('/verse/<ref>', methods=['POST','GET'])	
+def handle_fire(ref):
+	#TODO implement
+	if not ref:
+		return 'no_ref_selected'
+	fire(ref)
+
+	return redirect(f'/look_up/{ref}')
 
 @app.route('/request/create', methods=['POST'])
 def create_request():
