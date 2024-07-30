@@ -43,6 +43,8 @@ class Request(Base):
 class Verse(Base):
 	__tablename__ = 'verse'
 	id = Column(Integer, primary_key=True)
+	location = Column(String(128), nullable=True)
+	fire = Column(Integer, primary_key=True)
 
 
 # Create database tables (optional)

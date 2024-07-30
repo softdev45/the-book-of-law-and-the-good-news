@@ -2,12 +2,14 @@
 <h1>{% block title %}Received{% endblock %}</h1>
 {% endblock %} {% block content %}
 
+<div class="ref-nav">
 <a href="/source_of_living_water">
 	..
 </a>
 <a href="/source_of_living_water/b.{{ref[1]}}">
 	{{ ref[1] }}
 </a>
+</div>
 <div class="verses" style="list-style-type: none">
     {% for item in data %} 
     <div class="border my-3">

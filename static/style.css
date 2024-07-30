@@ -87,6 +87,10 @@ div div div:hover {
 	font-size: xxx-large;
 }
 
+.ref-nav a {
+	font-size: xxx-large;
+}
+
 input {
     width: 400px;
     margin-bottom: 12px;
