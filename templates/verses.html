@@ -17,9 +17,12 @@
     {% for item in data %} 
     <div class="border my-3">
         <div class="text-secondary">
-					<a href="/source/{{item['attrib'].id}}">
-					{{ item.attrib.id }}
-				</a>
+					<span>
+						<a href="/source/{{item['attrib'].id}}">
+						{{ item.attrib.id }}
+						</a>
+						#{{fire[item['attrib'].id]}}
+					</span>
 					{% if show_verses  %}
 					<div>{{item.text}}</div> 
 					{% endif %}

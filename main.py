@@ -67,13 +67,14 @@ def doc():
     return render_template('doc.html')
 
 def estimate_freq_index(word):
+	original = word
 	print('estimate: ', word)
 	while word:
 		print(word)
 		if word not in wordstat.keys():
 			word = word[:-1]
 		else:
-			return (word, wordstat[word])
+			return (original, wordstat[word])
 	return 0
 
 
@@ -88,7 +89,7 @@ def word_search(ref, word):
 	print('word search', word, locations)
 	if len(locations) == 0:
 		return []
-	print(locations[0].attrib)
+	# print(locations[0].attrib)
 	locations = list(map(lambda l: (l.text, l.attrib['id']), locations))
 	#impl rndmizr
 	return locations[:10]
@@ -98,8 +99,9 @@ def word_search(ref, word):
 @app.route('/source')
 def living_water(ref=None):
 	book = verse = chapter = words =steps= None
+	fire = {}
 	if ref:
-		fire(ref)
+		mark_fire(ref)
 		steps=ref.split('.')
 		book = steps[1] if len(steps) >1 else None
 		chapter = steps[2] if len(steps)>2 else None
@@ -124,12 +126,12 @@ def living_water(ref=None):
 		words = list(result)
 		words = list(set(words))
 		words = sorted(words, key = lambda e: e[1])
-		print(words)
+		# print(words)
 		words = words[0:5]
 
 
-		print('#1')
-		print(words)
+		# print('#1')
+		# print(words)
 		words = list(map(lambda word: (word[0], word_search(ref, word[0])), words))
 		words = filter(lambda word: len(word[1])>0, words)
 		words = sorted(words, key = lambda e: len(e[1]))
@@ -138,7 +140,8 @@ def living_water(ref=None):
 			for elem in elements:
 				if elem is not None:
 					verse = db.query(Verse).filter_by(location='.'.join(steps)).first()			
-			print(elements)
+			print(list(map(lambda e: e.attrib['id'], elements)))
+
 		# return render_template('verses.html', data = elements, show_verses=True)
 	elif chapter:
 		show_verses=True
@@ -146,9 +149,13 @@ def living_water(ref=None):
 		elements = root.xpath(xpath_expression)
 		with SessionLocal() as db:
 			for elem in elements:
-				if elem:
-					verse = db.query(Verse).filter_by(location='.'.join(steps)).first()			
-		print(elements)
+				if elem is not None:
+					print('.'.join(steps))
+					vq = db.query(Verse).filter_by(location=elem.attrib['id']).first()			
+					if vq:
+						id_ = elem.attrib['id']
+						fire[id_] = vq.fire
+		# print(elements)
 		# return render_template('verses.html', data = elements, show_verses=True)
 	elif book:
 		print(book)
@@ -159,11 +166,13 @@ def living_water(ref=None):
 		xpath_expression = f".//div[@type='book']"
 		elements = root.xpath(xpath_expression)
 
-	return render_template('verses.html', data = elements, show_verses=show_verses, ref=steps, verse=verse, words=words)
+	return render_template('verses.html', data = elements,
+	show_verses=show_verses, ref=steps, verse=verse, words=words,
+	fire=fire)
 	# return render_template('verses.html', data = elements)
 
 
-def fire(ref):
+def mark_fire(ref):
 	with SessionLocal() as db:
 		refed = db.query(Verse).filter_by(location=ref).first()
 		print('found verse:')
@@ -183,7 +192,7 @@ def handle_fire(ref):
 	#TODO implement
 	if not ref:
 		return 'no_ref_selected'
-	fire(ref)
+	mark_fire(ref)
 
 	return redirect(f'/look_up/{ref}')
 
