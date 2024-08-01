@@ -205,7 +205,7 @@ def handle_fire(ref):
 		return 'no_ref_selected'
 	mark_fire(ref)
 
-	return redirect(f'/look_up/{ref}')
+	return redirect(f'/source/{ref}')
 
 @app.route('/request/create', methods=['POST'])
 def create_request():
