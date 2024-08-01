@@ -10,9 +10,11 @@
 <a href="/source/b.{{ref[1]}}">
 	{{ ref[1] }}
 </a>
-<a href="/source/b.{{ref[1]}}.{{ref[2]}}">
-	{{ ref[1]}}.{{ref[2] }}
-</a>
+	{% if ref[2]  %}
+	<a href="/source/b.{{ref[1]}}.{{ref[2]}}">
+		{{ ref[1]}}.{{ref[2] }}
+	</a>
+	{% endif %}
 {% endif %}
 </div>
 <div class="verses" style="list-style-type: none">
