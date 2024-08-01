@@ -61,6 +61,7 @@ def get_db():
 with SessionLocal() as db:
 	migrate = Migrate(app, get_db())
 
+#TODO sync db with replit
 
 @app.route('/plan')
 def doc():
@@ -78,7 +79,7 @@ def estimate_freq_index(word):
 	return 0
 
 
-def word_search(ref, word):
+def word_search(word):
 	# ns = {"re": "http://exslt.org/regular-expressions"}	
 	xpath_expression = f".//seg[@type='verse'][contains(text(),'{word}')]"#[not(contains(@id, '{ref}'))]"
 	#TODO fix search
@@ -92,7 +93,17 @@ def word_search(ref, word):
 	# print(locations[0].attrib)
 	locations = list(map(lambda l: (l.text, l.attrib['id']), locations))
 	#impl rndmizr
-	return locations[:10]
+	return locations
+
+
+@app.route('/look_up/<word>')
+def look_up(word):
+	words = [(word, word_search(word))]
+
+	return render_template('verses.html', words =words)
+
+
+
 				
 
 @app.route('/source/<ref>')
@@ -112,9 +123,9 @@ def living_water(ref=None):
 		show_verses=True
 		xpath_expression = f".//seg[@type='verse'][@id='b.{book}.{chapter}.{verse}']"
 		elements = root.xpath(xpath_expression)
-		v : str= elements[0].text
+		v : str = elements[0].text
 		# words = v.strip().lower().split('')
-		 # Regular expression to match words (alphanumeric characters)
+		# Regular expression to match words (alphanumeric characters)
 		word_pattern = r'\w+'
 		# Find all matches of the word pattern in the sentence
 		words = re.findall(word_pattern, v)
@@ -132,7 +143,7 @@ def living_water(ref=None):
 
 		# print('#1')
 		# print(words)
-		words = list(map(lambda word: (word[0], word_search(ref, word[0])), words))
+		words = list(map(lambda word: (word[0], word_search(word[0])[:10]), words))
 		words = filter(lambda word: len(word[1])>0, words)
 		words = sorted(words, key = lambda e: len(e[1]))
 		

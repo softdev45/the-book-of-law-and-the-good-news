@@ -105,6 +105,13 @@ div div div div div:hover {
 	font-size: xxx-large;
 }
 
+.bible-ref {
+	font-size: large;
+}
+span.bible-ref :hover{
+	background-color: rgb(185, 181, 176);
+}
+
 input {
     width: 400px;
     margin-bottom: 12px;
