@@ -3,65 +3,69 @@
 {% endblock %} {% block content %}
 
 <div class="ref-nav">
-<a href="/source">
-	..
-</a>
-<a href="/source/b.{{ref[1]}}">
-	{{ ref[1] }}
-</a>
-<a href="/source/b.{{ref[1]}}.{{ref[2]}}">
-	{{ ref[1]}}.{{ref[2] }}
-</a>
+	<a href="/source">
+		..
+	</a>
+	{% if ref %}
+	<a href="/source/b.{{ref[1]}}">
+		{{ ref[1] }}
+	</a>
+	{% if ref[2] %}
+	<a href="/source/b.{{ref[1]}}.{{ref[2]}}">
+		{{ ref[1]}}.{{ref[2] }}
+	</a>
+	{% endif %}
+	{% endif %}
 </div>
 <div class="verses" style="list-style-type: none">
-    {% for item in data %} 
-    <div class="border my-3">
-        <div class="text-secondary">
-					<span>
-						<a href="/source/{{item['attrib'].id}}">
-						{{ item.attrib.id }}
-						</a>
-						#{{fire[item['attrib'].id]}}
-					</span>
-					{% if show_verses  %}
-					<div>{{item.text}}</div> 
-					{% endif %}
+	{% for item in data %}
+	<div class="border my-3">
+		<div class="text-secondary">
+			<span>
+				<a href="/source/{{item['attrib'].id}}">
+					{{ item.attrib.id }}
+				</a>
+				#{{fire[item['attrib'].id]}}
+			</span>
+			{% if show_verses %}
+			<div>{{item.text}}</div>
+			{% endif %}
 
-					
-					{% if words  %}
-					<div class="lookup-words">
-						{% for word in words %} 
-						<div class="lookup-word"><small>{{word[0]}}</small></div> 
 
-						{% for verseX in word[1] %} 
-						<div><i>{{verseX[0]}}</i></div> 
-						<div><a href="/source/{{verseX[1]}}">{{verseX[1]}}</a></div> 
-						{% endfor %}
+			{% if words %}
+			<div class="lookup-words">
+				{% for word in words %}
+				<div class="lookup-word"><small>{{word[0]}}</small></div>
 
-						{% endfor %}
-					</div>
-					{% endif %}
+				{% for verseX in word[1] %}
+				<div><i>{{verseX[0]}}</i></div>
+				<div><a href="/source/{{verseX[1]}}">{{verseX[1]}}</a></div>
+				{% endfor %}
 
-					{% if show_verses and verse %}
-					<div><a href="/look_up/{{item['attrib'].id}}">Drink</a><span>{{verse.fire}}</span></div> 
-					{% endif %}
-				</div>
-				
-				<!-- <form method="POST" action='/request/delete/{{item.id}}'>
+				{% endfor %}
+			</div>
+			{% endif %}
+
+			{% if show_verses and verse %}
+			<div><a href="/look_up/{{item['attrib'].id}}">Share</a><span>{{verse.fire}}</span></div>
+			{% endif %}
+		</div>
+
+		<!-- <form method="POST" action='/request/delete/{{item.id}}'>
 					<input type="submit" value="delete"/>
 			</form> -->
-      
-    </div>
-		 {% endfor %}
+
+	</div>
+	{% endfor %}
 </div>
 
 <script>
-	function sendFire(ref){
+	function sendFire(ref) {
 		fetch(`/verse/${ref}`)
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error:',   
- error));
+			.then(response => response.json())
+			.then(data => console.log(data))
+			.catch(error => console.error('Error:',
+				error));
 
 	}
 </script>
