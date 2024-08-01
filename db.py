@@ -4,9 +4,8 @@ from sqlalchemy import Column, DateTime, Integer, String, create_engine, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-
 # Define database connection details (replace with your own)
-DATABASE_URI = 'sqlite:///my_database_4.db'
+DATABASE_URI = 'sqlite:///my_database_replit_1.db'
 
 # Create engine and session maker
 engine = create_engine(DATABASE_URI)
@@ -28,7 +27,7 @@ class Request(Base):
   # translation = Column(String(128), nullable=True)
   reply_to = Column(String(128), nullable=True)
   public = Column(Boolean, default=True)
-	#burn
+  #burn
   verified = Column(Boolean, default=False)
   created_at = Column(
       DateTime(),
@@ -40,11 +39,12 @@ class Request(Base):
   def __repr__(self):
     return f'{self.request_data}'
 
+
 class Verse(Base):
-	__tablename__ = 'verse'
-	id = Column(Integer, primary_key=True)
-	location = Column(String(128), nullable=True)
-	fire = Column(Integer, default=0)
+  __tablename__ = 'verse'
+  id = Column(Integer, primary_key=True)
+  location = Column(String(128), nullable=True)
+  fire = Column(Integer, default=0)
 
 
 # Create database tables (optional)
