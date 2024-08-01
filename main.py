@@ -25,11 +25,11 @@ title = os.environ['Title'] = 'DEV_MODE'
 app = Flask(__name__)
 
 # with open('bible2.xml', 'r') as bible:
-	# data = bible.read()
+# data = bible.read()
 root_en = etree.parse('bible.xml')
 root_pl = etree.parse('polish.xml')
 root = root_en
-	# root = ET.fromstring(data)
+# root = ET.fromstring(data)
 from collections import OrderedDict
 
 wordstat = OrderedDict()
@@ -68,6 +68,7 @@ with SessionLocal() as db:
 
 #TODO sync db with replit
 
+
 @app.route('/plan')
 def doc():
 	return render_template('doc.html')
@@ -86,8 +87,8 @@ def estimate_freq_index(word):
 
 
 def word_search(word):
-	# ns = {"re": "http://exslt.org/regular-expressions"}	
-	xpath_expression = f".//seg[@type='verse'][contains(text(),'{word}')]"#[not(contains(@id, '{ref}'))]"
+	# ns = {"re": "http://exslt.org/regular-expressions"}
+	xpath_expression = f".//seg[@type='verse'][contains(text(),'{word}')]"  #[not(contains(@id, '{ref}'))]"
 	#TODO fix search
 	# print(xpath_expression)
 	locations = root.xpath(xpath_expression)  #, namespaces=ns)
@@ -107,11 +108,8 @@ def word_search(word):
 def look_up(word):
 	words = [(word, word_search(word))]
 
-	return render_template('verses.html', words =words)
+	return render_template('verses.html', words=words)
 
-
-
-				
 
 @app.route('/source/<ref>')
 @app.route('/source')
@@ -130,7 +128,7 @@ def living_water(ref=None):
 		show_verses = True
 		xpath_expression = f".//seg[@type='verse'][@id='b.{book}.{chapter}.{verse}']"
 		elements = root.xpath(xpath_expression)
-		v : str = elements[0].text
+		v: str = elements[0].text
 		# words = v.strip().lower().split('')
 		# Regular expression to match words (alphanumeric characters)
 		word_pattern = r'\w+'
@@ -149,10 +147,10 @@ def living_water(ref=None):
 
 		# print('#1')
 		# print(words)
-		words = list(map(lambda word: (word[0], word_search(word[0])[:10]), words))
-		words = filter(lambda word: len(word[1])>0, words)
-		words = sorted(words, key = lambda e: len(e[1]))
-		
+		words = list(map(lambda word: (word[0], word_search(word[0])[::2]), words))
+		words = filter(lambda word: len(word[1]) > 0, words)
+		words = sorted(words, key=lambda e: len(e[1]))
+
 		with SessionLocal() as db:
 			for elem in elements:
 				if elem is not None:
@@ -271,7 +269,7 @@ def handle_data2(id):
 @app.route('/')
 def index():
 	#DEV: temporarily: redirect root path (/) to /receiver
-	return redirect('/source')
+	return redirect('/source/b.JOS.1.8')
 	return f'Welcome to this website.<br/>\
     # Current title: {title}<br/>\
     page loaded at: {time.time()} '

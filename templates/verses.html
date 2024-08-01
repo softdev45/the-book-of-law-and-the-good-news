@@ -3,19 +3,19 @@
 {% endblock %} {% block content %}
 
 <div class="ref-nav">
-<a href="/source">
-	..
-</a>
-{% if ref  %}
-<a href="/source/b.{{ref[1]}}">
-	{{ ref[1] }}
-</a>
-	{% if ref[2]  %}
+	<a href="/source">
+		..
+	</a>
+	{% if ref %}
+	<a href="/source/b.{{ref[1]}}">
+		{{ ref[1] }}
+	</a>
+	{% if ref[2] %}
 	<a href="/source/b.{{ref[1]}}.{{ref[2]}}">
 		{{ ref[1]}}.{{ref[2] }}
 	</a>
 	{% endif %}
-{% endif %}
+	{% endif %}
 </div>
 <div class="verses" style="list-style-type: none">
 	{% for item in data %}
@@ -31,34 +31,35 @@
 			<div>{{item.text}}</div>
 			{% endif %}
 
-					
 
-					{% if show_verses and verse %}
-					<div><a href="/source/{{item['attrib'].id}}">Share</a><span>{{verse.fire}}</span></div> 
-					{% endif %}
-				</div>
-				
-				<!-- <form method="POST" action='/request/delete/{{item.id}}'>
+
+			{% if show_verses and verse %}
+			<div><a href="/source/{{item['attrib'].id}}">Share</a><span>{{verse.fire}}</span></div>
+			{% endif %}
+		</div>
+
+		<!-- <form method="POST" action='/request/delete/{{item.id}}'>
 					<input type="submit" value="delete"/>
 			</form> -->
-      
-    </div>
-		 {% endfor %}
-					{% if words  %}
-					<div class="lookup-words">
-						{% for word in words %} 
-						<div class="lookup-word"><small><a href="/look_up/{{word[0]}}">{{word[0]}}</a></small></div> 
 
-						{% for verseX in word[1] %} 
-						<div>
-						<span class="bible-ref">{{loop.index}}.<a href="/source/{{verseX[1]}}">{{verseX[1]}}</a></span> 
+	</div>
+	{% endfor %}
+	{% if words %}
+	<div class="lookup-words">
+		{% for word in words %}
+		<div class="lookup-word"><small><a href="/look_up/{{word[0]}}">{{word[0]}}</a></small></div>
 
-							<i>{{verseX[0]}}</i></div> 
-						{% endfor %}
+		{% for verseX in word[1] %}
+		<div>
+			<span class="bible-ref">{{loop.index}}.<a href="/source/{{verseX[1]}}">{{verseX[1]}}</a></span>
 
-						{% endfor %}
-					</div>
-					{% endif %}
+			{{verseX[0]}}
+		</div>
+		{% endfor %}
+
+		{% endfor %}
+	</div>
+	{% endif %}
 </div>
 
 <script>
