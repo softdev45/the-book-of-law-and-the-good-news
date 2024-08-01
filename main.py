@@ -26,8 +26,9 @@ app = Flask(__name__)
 
 # with open('bible2.xml', 'r') as bible:
 	# data = bible.read()
-root = etree.parse('bible.xml')
-# root_pl = etree.parse('polish.xml')
+root_en = etree.parse('bible.xml')
+root_pl = etree.parse('polish.xml')
+root = root_en
 	# root = ET.fromstring(data)
 from collections import OrderedDict
 
@@ -86,13 +87,14 @@ def word_search(word):
 	print(xpath_expression)
 	locations = root.xpath(xpath_expression)#, namespaces=ns)
 	#todo fix
-	locations = list(filter(lambda l: word in l.text.lower().split(), locations))
+	locations = list(filter(lambda l: word in l.text.lower(), locations))
 	print('word search', word, locations)
 	if len(locations) == 0:
 		return []
 	# print(locations[0].attrib)
 	locations = list(map(lambda l: (l.text, l.attrib['id']), locations))
 	#impl rndmizr
+	# print(locations)
 	return locations
 
 
