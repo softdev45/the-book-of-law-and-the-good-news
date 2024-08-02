@@ -90,9 +90,9 @@ def estimate_freq_index(word):
 
 def word_search(word):
 	# ns = {"re": "http://exslt.org/regular-expressions"}
-	if len(w := word.split(','))>1:
+	if len(w := word.split(',')) > 1:
 		word = w[0]
-	xpath_expression = f".//seg[@type='verse'][contains(text(),'{word}')]"#[not(contains(@id, '{ref}'))]"
+	xpath_expression = f".//seg[@type='verse'][contains(text(),'{word}')]"  #[not(contains(@id, '{ref}'))]"
 	#TODO fix search
 	# print(xpath_expression)
 	locations = root.xpath(xpath_expression)  #, namespaces=ns)
@@ -111,10 +111,6 @@ def word_search(word):
 
 def leave_trace(session, request):
 
-	print(session['paths'])
-	print(repr(session))
-	print(session.new)
-	print(session.modified)
 	try:
 		uid = session['uid']
 	except:
@@ -124,7 +120,7 @@ def leave_trace(session, request):
 		try:
 			session['paths']
 		except:
-			if session['paths'] is None:
+			if not 'paths' in session:
 				session['paths'] = []
 
 	if request.path not in session['paths']:
@@ -132,13 +128,11 @@ def leave_trace(session, request):
 		session.modified = True
 
 	print(session['paths'])
-	
 
-	
 
 @app.route('/look_up/<word>')
 def look_up(word):
-	leave_trace(session,request)
+	leave_trace(session, request)
 	words = [(word, word_search(word))]
 
 	return render_template('verses.html', words=words)
@@ -147,7 +141,7 @@ def look_up(word):
 @app.route('/source/<ref>')
 @app.route('/source')
 def living_water(ref=None):
-	leave_trace(session,request)
+	leave_trace(session, request)
 	book = verse = chapter = words = steps = None
 	fire = {}
 	if ref:
@@ -177,12 +171,12 @@ def living_water(ref=None):
 		words = list(set(words))
 		words = sorted(words, key=lambda e: e[1])
 		# print(words)
-		words = words[0:-int(len(words)*0.80)]
+		words = words[0:-int(len(words) * 0.80)]
 
 		# print('#1')
 		# print(words)
 		words = list(map(lambda word: [word[0], word_search(word[0])[::2]], words))
-		for i in range(0,len(words)):
+		for i in range(0, len(words)):
 			while len(words[i][1]) > 100:
 				words[i][1] = words[i][1][::2]
 		words = filter(lambda word: len(word[1]) > 0, words)
