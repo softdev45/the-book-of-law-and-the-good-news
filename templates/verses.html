@@ -3,10 +3,10 @@
 {% endblock %} {% block content %}
 
 <div>
-	 <span title="Path started at">@{{session.uid}}</span>
-{% for ref in session.paths %}	
+	<span title="Path started at">@{{session.uid}}</span>
+	{% for ref in session.paths %}
 	<a href='{{ref}}'> {{ref}}</a>
-{% endfor %}
+	{% endfor %}
 </div>
 
 <div class="ref-nav">
@@ -40,9 +40,9 @@
 
 
 
-			{% if show_verses and verse %}
+			<!-- {% if show_verses and verse %}
 			<div><a href="/source/{{item['attrib'].id}}">Share</a><span>{{verse.fire}}</span></div>
-			{% endif %}
+			{% endif %} -->
 		</div>
 
 		<!-- <form method="POST" action='/request/delete/{{item.id}}'>
@@ -51,23 +51,31 @@
 
 	</div>
 	{% endfor %}
-	{% if words %}
-	<div class="lookup-words">
-		{% for word in words %}
-		<div class="lookup-word"><small>{{loop.index}}/{{loop.length}}.<a href="/look_up/{{word[0]}}">{{word[0]}}</a></small></div>
-
-		{% for verseX in word[1] %}
-		<div>
-			<span class="bible-ref">{{loop.index}}/{{loop.length}}.<a href="/source/{{verseX[1]}}">{{verseX[1]}}</a></span>
-
-			{{verseX[0]}}
-		</div>
-		{% endfor %}
-
-		{% endfor %}
-	</div>
-	{% endif %}
 </div>
+{% if words %}
+
+<div class="lookup-summary">
+	{% for word in words %}
+	{{word[0]}}({{word[1]|length}})
+	{% endfor %}
+</div>
+
+<div class="lookup-words">
+	{% for word in words %}
+	<div class="lookup-word"><small>{{loop.index}}/{{loop.length}}.<a href="/look_up/{{word[0]}}">{{word[0]}}</a></small>
+	</div>
+
+	{% for verseX in word[1] %}
+	<div>
+		<span class="bible-ref">{{loop.index}}/{{loop.length}}.<a href="/source/{{verseX[1]}}">{{verseX[1]}}</a></span>
+
+		{{verseX[0]}}
+	</div>
+	{% endfor %}
+
+	{% endfor %}
+</div>
+{% endif %}
 
 <script>
 	function sendFire(ref) {
