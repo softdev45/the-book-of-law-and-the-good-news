@@ -258,7 +258,7 @@ def handle_data2(id):
 @app.route('/')
 def index():
 	#DEV: temporarily: redirect root path (/) to /receiver
-	return redirect('/source')
+	return redirect('/source/b.JOS.1.8')
 	return f'Welcome to this website.<br/>\
     # Current title: {title}<br/>\
     page loaded at: {time.time()} '
