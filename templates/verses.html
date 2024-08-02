@@ -54,11 +54,11 @@
 	{% if words %}
 	<div class="lookup-words">
 		{% for word in words %}
-		<div class="lookup-word"><small>{{loop.index}}/{{loop.length}}<a href="/look_up/{{word[0]}}">{{word[0]}}</a></small></div>
+		<div class="lookup-word"><small>{{loop.index}}/{{loop.length}}.<a href="/look_up/{{word[0]}}">{{word[0]}}</a></small></div>
 
 		{% for verseX in word[1] %}
 		<div>
-			<span class="bible-ref">{{loop.index}}/{{loop.length}}<a href="/source/{{verseX[1]}}">{{verseX[1]}}</a></span>
+			<span class="bible-ref">{{loop.index}}/{{loop.length}}.<a href="/source/{{verseX[1]}}">{{verseX[1]}}</a></span>
 
 			{{verseX[0]}}
 		</div>
