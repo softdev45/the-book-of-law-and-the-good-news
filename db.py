@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Column, DateTime, Integer, String, create_engine, Boolean, Text
+from sqlalchemy import Column, DateTime, Integer, String, create_engine, Boolean, Text, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -46,6 +46,22 @@ class Verse(Base):
   location = Column(String(128), nullable=True)
   fire = Column(Integer, default=0)
 	# timestamp = Column(Integer, default = 0)	
+
+class Viewed(Base):
+  __tablename__ = 'viewed'
+  id = Column(Integer, primary_key=True)
+  location = Column(String(128), nullable=False)
+  created_at = Column(
+      DateTime(),
+      default=datetime.now,)
+  session = Column(Float, nullable=True)
+
+class Tag(Base):
+  __tablename__ = 'tag'
+  id = Column(Integer, primary_key=True)
+  location = Column(String(128), nullable=False)
+  tag = Column(String(64), nullable=False)
+	
 
 class Edge(Base):
   __tablename__ = 'edge'
