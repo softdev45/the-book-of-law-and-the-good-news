@@ -1,5 +1,9 @@
 {% extends 'base.html' %} 
-{% block title %}{{'.'.join(ref[1:])}}{% endblock %}
+{% block title %}
+{% if ref %}
+{{ '.'.join(ref[1:]) }}
+{% endif %}
+{% endblock %}
 {% block header %}
 <h1></h1>
 {% endblock %} 
