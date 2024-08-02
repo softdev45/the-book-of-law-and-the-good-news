@@ -10,7 +10,7 @@
 
 {% block content %}
 
-<span title="Path started at">@{{session.uid}}</span>
+<span title="Path started at">@{{session.uid }}</span>
 <div class="path-trace">
 
 	{% for ref in session.paths %}
@@ -55,9 +55,9 @@
 		<div class="text-secondary">
 			<span class="prevent-select">
 				<a href="/source/{{item['attrib'].id}}">
-					{{ item.attrib.id }}
+					{{ item.attrib.id[2:] }}
 				</a>
-				#{{fire[item['attrib'].id]}}
+				<!-- #{{fire[item['attrib'].id]}} -->
 			</span>
 			{% if show_verses %}
 			<div>{{item.text}}</div>
@@ -92,7 +92,7 @@
 
 	{% for verseX in word[1] %}
 	<div>
-		<span class="bible-ref">{{loop.index}}/{{loop.length}}.<a href="/source/{{verseX[1]}}">{{verseX[1]}}</a></span>
+		<span class="bible-ref">{{loop.index}}/{{loop.length}}.<a href="/source/{{verseX[1]}}"> {{verseX[1][2:]}}</a></span>
 
 		{{verseX[0]}}
 	</div>
