@@ -21,6 +21,10 @@ nav div div:hover {
 nav div:hover {
     background-color: #68685e;
 }
+
+nav a {
+	font-size: xxx-large;
+}
 /* nav div:first-child  div {
   background-color: black;
   color: white;

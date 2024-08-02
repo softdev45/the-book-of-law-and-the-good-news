@@ -134,10 +134,16 @@ def leave_trace(session, request):
 @app.route('/look_up/<word>')
 def look_up(word):
 	leave_trace(session, request)
+	make_fire(word)
+
 	words = [(word, word_search(word))]
 
 	return render_template('verses.html', words=words)
 
+@app.route('/connects/<to>/from_to/<source>')
+def connect(to=None,source=None):
+	pass
+	# with
 
 @app.route('/source/<ref>')
 @app.route('/source')
@@ -206,6 +212,7 @@ def living_water(ref=None):
 			for elem in elements:
 				if elem is not None:
 					verse = db.query(Verse).filter_by(location='.'.join(steps)).first()
+					# viewed = db.query(Viewer).filter_by(location='.'.join(steps))
 			# print(list(map(lambda e: e.attrib['id'], elements)))
 
 		# return render_template('verses.html', data = elements, show_verses=True)
@@ -242,7 +249,7 @@ def living_water(ref=None):
 	# return render_template('verses.html', data = elements)
 
 
-def mark_fire(ref):
+def mark_fire(ref ):
 	with SessionLocal() as db:
 		refed = db.query(Verse).filter_by(location=ref).first()
 		# print('found verse:')
@@ -254,7 +261,11 @@ def mark_fire(ref):
 		if refed:
 			refed.fire += 1
 			db.add(refed)
-			db.commit()
+			# db.commit()
+
+		vsted = Viewed(location=ref, session=session['uid'])
+		db.add(vsted)
+		db.commit()
 
 
 @app.route('/verse/<ref>', methods=['POST', 'GET'])

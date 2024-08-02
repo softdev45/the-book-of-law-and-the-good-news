@@ -45,6 +45,10 @@ class Verse(Base):
   id = Column(Integer, primary_key=True)
   location = Column(String(128), nullable=True)
   fire = Column(Integer, default=0)
+  # created_at = Column(
+  #     DateTime(),
+  #     default=datetime.now,)
+  # session = Column(Float, nullable=True)
 	# timestamp = Column(Integer, default = 0)	
 
 class Viewed(Base):
