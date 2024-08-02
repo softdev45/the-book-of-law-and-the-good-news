@@ -45,6 +45,14 @@ class Verse(Base):
   id = Column(Integer, primary_key=True)
   location = Column(String(128), nullable=True)
   fire = Column(Integer, default=0)
+	# timestamp = Column(Integer, default = 0)	
+
+class Edge(Base):
+  __tablename__ = 'edge'
+  id = Column(Integer, primary_key=True)
+  source = Column(String(128), nullable=False)
+  dest = Column(String(128), nullable=False)
+	
 
 
 # Create database tables (optional)

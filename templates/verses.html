@@ -2,6 +2,13 @@
 <h1>{% block title %}Received{% endblock %}</h1>
 {% endblock %} {% block content %}
 
+<div>
+	 <span title="Path started at">@{{session.uid}}</span>
+{% for ref in session.paths %}	
+	<a href='{{ref}}'> {{ref}}</a>
+{% endfor %}
+</div>
+
 <div class="ref-nav">
 	<a href="/source">
 		..
@@ -21,7 +28,7 @@
 	{% for item in data %}
 	<div class="border my-3">
 		<div class="text-secondary">
-			<span>
+			<span class="prevent-select">
 				<a href="/source/{{item['attrib'].id}}">
 					{{ item.attrib.id }}
 				</a>
@@ -46,8 +53,9 @@
 	{% endfor %}
 	{% if words %}
 	<div class="lookup-words">
+		<div>{{words|length}}</div>
 		{% for word in words %}
-		<div class="lookup-word"><small><a href="/look_up/{{word[0]}}">{{word[0]}}</a></small></div>
+		<div class="lookup-word"><small>{{loop.index}}/{{loop.length}}<a href="/look_up/{{word[0]}}">{{word[0]}}</a></small></div>
 
 		{% for verseX in word[1] %}
 		<div>

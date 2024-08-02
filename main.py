@@ -2,7 +2,7 @@ import datetime
 import os
 import time
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 from flask.helpers import redirect
 from wtforms.fields.simple import TextAreaField
 from wtforms_alchemy import ModelForm
@@ -23,6 +23,8 @@ title = os.environ['Title'] = 'DEV_MODE'
 # os.environ.get('Title')
 
 app = Flask(__name__)
+
+app.secret_key = '1234!@#$qwerQWER'
 
 # with open('bible2.xml', 'r') as bible:
 # data = bible.read()
@@ -88,13 +90,16 @@ def estimate_freq_index(word):
 
 def word_search(word):
 	# ns = {"re": "http://exslt.org/regular-expressions"}
-	xpath_expression = f".//seg[@type='verse'][contains(text(),'{word}')]"  #[not(contains(@id, '{ref}'))]"
+	if len(w := word.split(','))>1:
+		word = w[0]
+	xpath_expression = f".//seg[@type='verse'][contains(text(),'{word}')]"#[not(contains(@id, '{ref}'))]"
 	#TODO fix search
 	# print(xpath_expression)
 	locations = root.xpath(xpath_expression)  #, namespaces=ns)
 	#todo fix
-	locations = list(filter(lambda l: word in l.text.lower(), locations))
-	print('word search', word, locations)
+	# while w
+	locations = list(filter(lambda l: word.lower() in l.text.lower(), locations))
+	# print('word search', word, locations)
 	if len(locations) == 0:
 		return []
 	# print(locations[0].attrib)
@@ -104,8 +109,36 @@ def word_search(word):
 	return locations
 
 
+def leave_trace(session, request):
+
+	print(session['paths'])
+	print(repr(session))
+	print(session.new)
+	print(session.modified)
+	try:
+		uid = session['uid']
+	except:
+		import random
+		import time
+		session['uid'] = time.time()
+		try:
+			session['paths']
+		except:
+			if session['paths'] is None:
+				session['paths'] = []
+
+	if request.path not in session['paths']:
+		session['paths'].append(request.path)
+		session.modified = True
+
+	print(session['paths'])
+	
+
+	
+
 @app.route('/look_up/<word>')
 def look_up(word):
+	leave_trace(session,request)
 	words = [(word, word_search(word))]
 
 	return render_template('verses.html', words=words)
@@ -114,6 +147,7 @@ def look_up(word):
 @app.route('/source/<ref>')
 @app.route('/source')
 def living_water(ref=None):
+	leave_trace(session,request)
 	book = verse = chapter = words = steps = None
 	fire = {}
 	if ref:
@@ -143,11 +177,14 @@ def living_water(ref=None):
 		words = list(set(words))
 		words = sorted(words, key=lambda e: e[1])
 		# print(words)
-		words = words[0:5]
+		words = words[0:-int(len(words)*0.80)]
 
 		# print('#1')
 		# print(words)
-		words = list(map(lambda word: (word[0], word_search(word[0])[::2]), words))
+		words = list(map(lambda word: [word[0], word_search(word[0])[::2]], words))
+		for i in range(0,len(words)):
+			while len(words[i][1]) > 100:
+				words[i][1] = words[i][1][::2]
 		words = filter(lambda word: len(word[1]) > 0, words)
 		words = sorted(words, key=lambda e: len(e[1]))
 
