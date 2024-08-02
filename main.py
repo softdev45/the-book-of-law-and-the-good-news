@@ -177,7 +177,7 @@ def living_water(ref=None):
 		# print(words)
 		words = list(map(lambda word: [word[0], word_search(word[0])[::2]], words))
 		for i in range(0, len(words)):
-			while len(words[i][1]) > 100:
+			while len(words[i][1]) ** 0.5 > 6:
 				words[i][1] = words[i][1][::2]
 		words = filter(lambda word: len(word[1]) > 0, words)
 		words = sorted(words, key=lambda e: len(e[1]))
