@@ -163,3 +163,5 @@ cython_debug/
 
 .pythonlibs
 .local_settings
+
+my_database*.db
