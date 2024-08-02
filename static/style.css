@@ -99,13 +99,17 @@ div div div div div:hover {
   user-select: none; /* Standard syntax */
 }
 
+.lookup-summary {
+	background-color: #cac4b7;
+	font-size: large;
+}
+
 .verses div {
 	font-size: xxx-large;
 }
 
 .lookup-words div {
 	font-size: x-large;
-    font-
 }
 
 .ref-nav a {

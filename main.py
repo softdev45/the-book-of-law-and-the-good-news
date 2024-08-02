@@ -18,6 +18,7 @@ import xml.etree.ElementTree as ET
 from lxml import etree
 
 import re
+import math
 
 title = os.environ['Title'] = 'DEV_MODE'
 # os.environ.get('Title')
@@ -171,15 +172,25 @@ def living_water(ref=None):
 		words = list(set(words))
 		words = sorted(words, key=lambda e: e[1])
 		# print(words)
-		words = words[0:-int(len(words) * 0.80)]
+		words = words[0:int(len(words) * 0.25)]
 
 		# print('#1')
 		# print(words)
-		words = list(map(lambda word: [word[0], word_search(word[0])[::2]], words))
+		
+		words = list(map(lambda word: [word[0], word_search(word[0])], words))
 		for i in range(0, len(words)):
-			while len(words[i][1]) ** 0.5 > 6:
+			# if len(words[i][1]) > 2000:
+			# while len(words[i][1])  > 36:
+			# 	words[i][1] = words[i][1][::2]
+			# else:
+			start_len = len(words[i][1])
+			thres = 77 - int(math.log(start_len*(i+1))**1.81)
+
+			print(words[i][0], ' ', thres, 'start=', start_len)
+			
+			while len(words[i][1]) > thres:
 				words[i][1] = words[i][1][::2]
-		words = filter(lambda word: len(word[1]) > 0, words)
+		words = list(filter(lambda word: len(word[1]) > 0, words))
 		words = sorted(words, key=lambda e: len(e[1]))
 
 		with SessionLocal() as db:
