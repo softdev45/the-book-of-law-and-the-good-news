@@ -164,4 +164,10 @@ cython_debug/
 .pythonlibs
 .local_settings
 
-my_database*.db
+
+my_database*db
+zork_reserved.sh
+.breakpoints
+.archive
+.local
+.upm
