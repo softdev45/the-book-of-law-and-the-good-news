@@ -163,7 +163,7 @@ def living_water(ref=None):
 		word_pattern = r'\w+'
 		# Find all matches of the word pattern in the sentence
 		words = re.findall(word_pattern, v)
-		words = [word.lower() for word in words]
+		words = verse_words = [word.lower() for word in words]
 
 		result = None
 		while result is None:
@@ -172,6 +172,7 @@ def living_water(ref=None):
 		words = list(set(words))
 		words = sorted(words, key=lambda e: e[1])
 		# print(words)
+		# words = words[0:int(len(words) * 0.25)]
 		words = words[0:int(len(words) * 0.25)]
 
 		# print('#1')
@@ -179,14 +180,26 @@ def living_water(ref=None):
 		
 		words = list(map(lambda word: [word[0], word_search(word[0])], words))
 		words = list(filter(lambda word: len(word[1]) > 0, words))
+
 		for i in range(0, len(words)):
 			start_len = len(words[i][1])
 			thres = 77 - int(math.log(start_len*(i+1))**1.81)
-
 			print(words[i][0], ' ', thres, 'start=', start_len)
-			
 			while len(words[i][1]) > thres:
 				words[i][1] = words[i][1][::2]
+
+		# for i in range(0, len(words)):
+		# 	print(words)
+		# 	sentences = words[i][1]
+		# 	result = sorted(sentences, key=lambda s: sum([s[0].lower().count(word) for word in verse_words]), reverse=True)
+		# 	if len(result) > 30:
+		# 		result = result[:30]
+		# 	words[i][1] = result
+			
+
+
+
+		
 		words = sorted(words, key=lambda e: len(e[1]))
 
 		with SessionLocal() as db:
