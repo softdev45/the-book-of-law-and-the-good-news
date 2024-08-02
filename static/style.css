@@ -104,6 +104,32 @@ div div div div div:hover {
 	font-size: large;
 }
 
+.path-trace {
+	display: flex;
+	flex-direction: row;
+	max-width: 70%;
+	flex-wrap: wrap;
+}
+
+.path-trace-block {
+	display: flex;
+	flex-direction: column;
+	width: 170px;
+
+}
+
+.loc-path * {
+	display:inline-block;
+
+}
+.path-trace-block a{
+	display:inline;
+}
+
+div.path-trace-block:last-child  :last-child span{
+	background-color: rgb(216, 209, 148);
+}
+
 .verses div {
 	font-size: xxx-large;
 }

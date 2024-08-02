@@ -124,7 +124,7 @@ def leave_trace(session, request):
 			if not 'paths' in session:
 				session['paths'] = []
 
-	if request.path not in session['paths']:
+	if request.path not in session['paths'] and request.path.count('/') > 1:
 		session['paths'].append(request.path)
 		session.modified = True
 
@@ -178,11 +178,8 @@ def living_water(ref=None):
 		# print(words)
 		
 		words = list(map(lambda word: [word[0], word_search(word[0])], words))
+		words = list(filter(lambda word: len(word[1]) > 0, words))
 		for i in range(0, len(words)):
-			# if len(words[i][1]) > 2000:
-			# while len(words[i][1])  > 36:
-			# 	words[i][1] = words[i][1][::2]
-			# else:
 			start_len = len(words[i][1])
 			thres = 77 - int(math.log(start_len*(i+1))**1.81)
 
@@ -190,7 +187,6 @@ def living_water(ref=None):
 			
 			while len(words[i][1]) > thres:
 				words[i][1] = words[i][1][::2]
-		words = list(filter(lambda word: len(word[1]) > 0, words))
 		words = sorted(words, key=lambda e: len(e[1]))
 
 		with SessionLocal() as db:
