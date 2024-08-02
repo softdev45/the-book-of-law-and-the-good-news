@@ -10,7 +10,7 @@ from wtforms_alchemy import ModelForm
 # import wtforms
 # :
 
-from db import Request, SessionLocal, Verse
+from db import Request, SessionLocal, Verse, Viewed
 
 from flask_migrate import Migrate
 
@@ -70,6 +70,25 @@ with SessionLocal() as db:
 	migrate = Migrate(app, get_db())
 
 #TODO sync db with replit
+
+
+def make_fire(ref):
+	with SessionLocal() as db:
+		refed = db.query(Verse).filter_by(location=ref).first()
+		# print('found verse:')
+		print(refed)
+		if not refed:
+			refed = Verse(location=ref, fire=0)
+		# print('adding fire:')
+		# print(refed)
+		if refed:
+			refed.fire += 1
+			db.add(refed)
+			# db.commit()
+
+		vsted = Viewed(location=ref, session=session['uid'])
+		db.add(vsted)
+		db.commit()
 
 
 @app.route('/plan')
@@ -134,9 +153,17 @@ def leave_trace(session, request):
 @app.route('/look_up/<word>')
 def look_up(word):
 	leave_trace(session, request)
+	make_fire(word)
+
 	words = [(word, word_search(word))]
 
 	return render_template('verses.html', words=words)
+
+
+@app.route('/connects/<to>/from_to/<source>')
+def connect(to=None, source=None):
+	pass
+	# with
 
 
 @app.route('/source/<ref>')
@@ -146,7 +173,7 @@ def living_water(ref=None):
 	book = verse = chapter = words = steps = None
 	fire = {}
 	if ref:
-		mark_fire(ref)
+		make_fire(ref)
 		steps = ref.split('.')
 		book = steps[1] if len(steps) > 1 else None
 		chapter = steps[2] if len(steps) > 2 else None
@@ -163,7 +190,7 @@ def living_water(ref=None):
 		word_pattern = r'\w+'
 		# Find all matches of the word pattern in the sentence
 		words = re.findall(word_pattern, v)
-		words = [word.lower() for word in words]
+		words = verse_words = [word.lower() for word in words]
 
 		result = None
 		while result is None:
@@ -172,27 +199,37 @@ def living_water(ref=None):
 		words = list(set(words))
 		words = sorted(words, key=lambda e: e[1])
 		# print(words)
+		# words = words[0:int(len(words) * 0.25)]
 		words = words[0:int(len(words) * 0.25)]
 
 		# print('#1')
 		# print(words)
-		
+
 		words = list(map(lambda word: [word[0], word_search(word[0])], words))
 		words = list(filter(lambda word: len(word[1]) > 0, words))
+
 		for i in range(0, len(words)):
 			start_len = len(words[i][1])
-			thres = 77 - int(math.log(start_len*(i+1))**1.81)
-
+			thres = 77 - int(math.log(start_len * (i + 1))**1.81)
 			print(words[i][0], ' ', thres, 'start=', start_len)
-			
 			while len(words[i][1]) > thres:
 				words[i][1] = words[i][1][::2]
+
+		# for i in range(0, len(words)):
+		# 	print(words)
+		# 	sentences = words[i][1]
+		# 	result = sorted(sentences, key=lambda s: sum([s[0].lower().count(word) for word in verse_words]), reverse=True)
+		# 	if len(result) > 30:
+		# 		result = result[:30]
+		# 	words[i][1] = result
+
 		words = sorted(words, key=lambda e: len(e[1]))
 
 		with SessionLocal() as db:
 			for elem in elements:
 				if elem is not None:
 					verse = db.query(Verse).filter_by(location='.'.join(steps)).first()
+					# viewed = db.query(Viewer).filter_by(location='.'.join(steps))
 			# print(list(map(lambda e: e.attrib['id'], elements)))
 
 		# return render_template('verses.html', data = elements, show_verses=True)
@@ -229,27 +266,12 @@ def living_water(ref=None):
 	# return render_template('verses.html', data = elements)
 
 
-def mark_fire(ref):
-	with SessionLocal() as db:
-		refed = db.query(Verse).filter_by(location=ref).first()
-		# print('found verse:')
-		print(refed)
-		if not refed:
-			refed = Verse(location=ref, fire=0)
-		# print('adding fire:')
-		# print(refed)
-		if refed:
-			refed.fire += 1
-			db.add(refed)
-			db.commit()
-
-
 @app.route('/verse/<ref>', methods=['POST', 'GET'])
 def handle_fire(ref):
 	#TODO implement
 	if not ref:
 		return 'no_ref_selected'
-	mark_fire(ref)
+	make_fire(ref)
 
 	return redirect(f'/source/{ref}')
 

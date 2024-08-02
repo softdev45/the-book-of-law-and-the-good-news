@@ -1,11 +1,11 @@
 from datetime import datetime
 
-from sqlalchemy import Column, DateTime, Integer, String, create_engine, Boolean, Text
+from sqlalchemy import Column, DateTime, Integer, String, create_engine, Boolean, Text, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 # Define database connection details (replace with your own)
-DATABASE_URI = 'sqlite:///my_database_replit_1.db'
+DATABASE_URI = 'sqlite:///my_database_replit_2_added_viewed.db'
 
 # Create engine and session maker
 engine = create_engine(DATABASE_URI)
@@ -45,14 +45,37 @@ class Verse(Base):
   id = Column(Integer, primary_key=True)
   location = Column(String(128), nullable=True)
   fire = Column(Integer, default=0)
-	# timestamp = Column(Integer, default = 0)	
+  # created_at = Column(
+  #     DateTime(),
+  #     default=datetime.now,)
+  # session = Column(Float, nullable=True)
+
+# timestamp = Column(Integer, default = 0)
+
+
+class Viewed(Base):
+  __tablename__ = 'viewed'
+  id = Column(Integer, primary_key=True)
+  location = Column(String(128), nullable=False)
+  created_at = Column(
+      DateTime(),
+      default=datetime.now,
+  )
+  session = Column(Float, nullable=True)
+
+
+class Tag(Base):
+  __tablename__ = 'tag'
+  id = Column(Integer, primary_key=True)
+  location = Column(String(128), nullable=False)
+  tag = Column(String(64), nullable=False)
+
 
 class Edge(Base):
   __tablename__ = 'edge'
   id = Column(Integer, primary_key=True)
   source = Column(String(128), nullable=False)
   dest = Column(String(128), nullable=False)
-	
 
 
 # Create database tables (optional)

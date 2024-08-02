@@ -1,12 +1,16 @@
 {% extends 'base.html' %} 
-{% block title %}{{'.'.join(ref[1:])}}{% endblock %}
+{% block title %}
+{% if ref %}
+{{ '.'.join(ref[1:]) }}
+{% endif %}
+{% endblock %}
 {% block header %}
 <h1></h1>
 {% endblock %} 
 
 {% block content %}
 
-<span title="Path started at">@{{session.uid}}</span>
+<span title="Path started at">@{{session.uid }}</span>
 <div class="path-trace">
 
 	{% for ref in session.paths %}
@@ -15,7 +19,7 @@
 	<div class="path-trace-block">
 		{%endif %}
 		<span class="loc-path">
-			<span>{{loop.index}}<a href='{{ref}}'> {{pathref[2][2:]}}</a></span>
+			<span>{{loop.index}}<a href='{{ref}}'> {{pathref[2][2-2:]}}</a></span>
 		</span>
 
 		{% if loop.index0 % 5 == 4 %}
@@ -51,9 +55,9 @@
 		<div class="text-secondary">
 			<span class="prevent-select">
 				<a href="/source/{{item['attrib'].id}}">
-					{{ item.attrib.id }}
+					{{ item.attrib.id[2:] }}
 				</a>
-				#{{fire[item['attrib'].id]}}
+				<!-- #{{fire[item['attrib'].id]}} -->
 			</span>
 			{% if show_verses %}
 			<div>{{item.text}}</div>
@@ -88,7 +92,7 @@
 
 	{% for verseX in word[1] %}
 	<div>
-		<span class="bible-ref">{{loop.index}}/{{loop.length}}.<a href="/source/{{verseX[1]}}">{{verseX[1]}}</a></span>
+		<span class="bible-ref">{{loop.index}}/{{loop.length}}.<a href="/source/{{verseX[1]}}"> {{verseX[1][2:]}}</a></span>
 
 		{{verseX[0]}}
 	</div>
