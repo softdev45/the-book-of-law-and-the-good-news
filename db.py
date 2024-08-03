@@ -4,6 +4,8 @@ from sqlalchemy import Column, DateTime, Integer, String, create_engine, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
+import json
+
 # Define database connection details (replace with your own)
 DATABASE_URI = 'sqlite:///my_database_replit_2_added_viewed.db'
 
@@ -17,6 +19,22 @@ Base = declarative_base()
 #TODO: create new field (email) and migrate db
 #TODO: load text_data_db.txt into db
 
+def serialize_viewed(viewed_obj):
+  """
+  Serializes a Viewed object to a dictionary.
+
+  Args:
+      viewed_obj (Viewed): The Viewed object to serialize.
+
+  Returns:
+      dict: A dictionary representation of the Viewed object.
+  """
+  return {
+      "id": viewed_obj.id,
+      "location": viewed_obj.location,
+      "created_at": viewed_obj.created_at.isoformat(),  # Convert datetime to ISO format
+      "session": viewed_obj.session
+  }
 
 class Request(Base):
   __tablename__ = 'requests'
@@ -52,7 +70,6 @@ class Verse(Base):
 
 # timestamp = Column(Integer, default = 0)
 
-
 class Viewed(Base):
   __tablename__ = 'viewed'
   id = Column(Integer, primary_key=True)
@@ -62,6 +79,13 @@ class Viewed(Base):
       default=datetime.now,
   )
   session = Column(Float, nullable=True)
+
+  def __repr__(self):
+    return f'{self.id}, {self.location}, {self.created_at}, {self.session}'
+
+  def to_json(self):
+    return serialize_viewed(self)
+
 
 
 class Tag(Base):

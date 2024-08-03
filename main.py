@@ -107,6 +107,16 @@ def estimate_freq_index(word):
 			return (original, wordstat[word])
 	return 0
 
+@app.route('/db')
+@app.route('/db/<name>')
+def download(name='Viewed'):
+	with SessionLocal() as db:
+		import time
+		result = db.query(Viewed).all()
+		result = list(map(lambda v: v.to_json(), result))
+		from flask import jsonify
+		# print(result)
+	return jsonify(result)
 
 def word_search(word):
 	# ns = {"re": "http://exslt.org/regular-expressions"}
