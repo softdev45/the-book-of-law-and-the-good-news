@@ -1,67 +1,69 @@
 body {
-    font-family: monospace;
-    background-color: #f2f2ed;
+	font-family: monospace;
+	background-color: #f2f2ed;
 }
 
 nav div {
-    background-color: black;
-    padding: 10px;
-    margin-left: 10px;
-    display: inline-block;
-    border-right-style: dotted;
-    border-right-color: white;
-    border-right-width: 1px;
-    /* width: 200px; */
-    display: flex;
-    flex-direction: row;
+	background-color: black;
+	padding: 10px;
+	margin-left: 10px;
+	display: inline-block;
+	border-right-style: dotted;
+	border-right-color: white;
+	border-right-width: 1px;
+	/* width: 200px; */
+	display: flex;
+	flex-direction: row;
 }
+
 nav div div:hover {
-    background-color: #9ca93d;
+	background-color: #9ca93d;
 }
+
 nav div:hover {
-    background-color: #68685e;
+	background-color: #68685e;
 }
 
 nav a {
 	font-size: xxx-large;
 }
+
 /* nav div:first-child  div {
   background-color: black;
   color: white;
 }*/
 
 nav div div {
-    width: 300px;
+	width: 300px;
 }
 
 nav div div a {
-    color: white;
+	color: white;
 }
 
 div {
-    border-style: dotted;
-    border-color: white;
-    border-width: 1px;
+	border-style: dotted;
+	border-color: white;
+	border-width: 1px;
 
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 section {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 span {
-    border-style: dashed;
-    border-color: #aaaaaa;
-    border-width: 1px;
-    border-bottom-width: 0px;
-    border-right-width: 0px;
+	border-style: dashed;
+	border-color: #aaaaaa;
+	border-width: 1px;
+	border-bottom-width: 0px;
+	border-right-width: 0px;
 }
 
-a {
-}
+a {}
 
 /* nav div div:first-child {
   background-color: black;
@@ -72,25 +74,29 @@ nav div div:first-child:hover {
 } */
 
 nav {
-    margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 
 /* mouse-over:hover = color  */
 div:hover {
-    /* background-color: #acae84; */
-    background-color: #e5e6e0;
+	/* background-color: #acae84; */
+	background-color: #e5e6e0;
 }
+
 div div:hover {
-    background-color: #e2e2db;
+	background-color: #e2e2db;
 }
+
 div div div:hover {
-    background-color: #fefff0;
+	background-color: #fefff0;
 }
+
 div div div div:hover {
-    background-color: #f1eee7;
+	background-color: #f1eee7;
 }
+
 div div div div div:hover {
-    background-color: #f7f6f4;
+	background-color: #f7f6f4;
 }
 
 .lookup-word {
@@ -98,9 +104,12 @@ div div div div div:hover {
 }
 
 .prevent-select {
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE 10 and IE 11 */
-  user-select: none; /* Standard syntax */
+	-webkit-user-select: none;
+	/* Safari */
+	-ms-user-select: none;
+	/* IE 10 and IE 11 */
+	user-select: none;
+	/* Standard syntax */
 }
 
 .lookup-summary {
@@ -123,14 +132,15 @@ div div div div div:hover {
 }
 
 .loc-path * {
-	display:inline-block;
+	display: inline-block;
 
 }
-.path-trace-block a{
-	display:inline;
+
+.path-trace-block a {
+	display: inline;
 }
 
-div.path-trace-block:last-child  :last-child span{
+div.path-trace-block:last-child :last-child span {
 	background-color: rgb(216, 209, 148);
 }
 
@@ -149,26 +159,28 @@ div.path-trace-block:last-child  :last-child span{
 .bible-ref {
 	font-size: large;
 }
-span.bible-ref :hover{
+
+span.bible-ref :hover {
 	background-color: rgb(185, 181, 176);
 }
 
 input {
-    width: 400px;
-    margin-bottom: 12px;
+	width: 400px;
+	margin-bottom: 12px;
 }
+
 textarea {
-    width: 400px;
-    height: 100px;
-    margin-bottom: 12px;
+	width: 400px;
+	height: 100px;
+	margin-bottom: 12px;
 }
 
 label {
-    width: 15%;
+	width: 15%;
 }
 
 div {
-    padding-left: 10px;
+	padding-left: 10px;
 }
 
 /* @media screen and (max-width: 900px) {
@@ -190,13 +202,22 @@ html body svg:not(:root) {
 } */
 
 div#joystick {
-    position: sticky;
+	display: flex;
+	flex-direction: row;
+	position: sticky;
 
-    top: 0px;
-    left: 0px;
+	top: 0px;
+	left: 0px;
+	right: 20%;
+
+}
+
+#joystick button {
+	font-size: xxx-large;
+	width:200px;
 }
 
 .container {
-    max-width: 100%;
-    max-height: 90%;
+	max-width: 100%;
+	max-height: 90%;
 }

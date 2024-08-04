@@ -119,7 +119,7 @@ def download(name='Viewed'):
 	return jsonify(result)
 
 def word_search(word):
-	# ns = {"re": "http://exslt.org/regular-expressions"}
+	# ns = {"re": "http://exslt.org/regular-expressions"}	
 	if len(w := word.split(',')) > 1:
 		word = w[0]
 	xpath_expression = f".//seg[@type='verse'][contains(text(),'{word}')]"  #[not(contains(@id, '{ref}'))]"
