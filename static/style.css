@@ -1,28 +1,33 @@
 body {
 	/* font-family: monospace; */
 	font-family: cursive;
-	background-color: #f2f2ed;
+	/* background-color: #f2f2ed; */
+	/* background-color: #68685e; */
+	/* background-color: #272725; */
+	background-color: #3c3c35;
 }
 
 nav div {
-	background-color: black;
+	background-color: #151515;
 	padding: 10px;
 	margin-left: 10px;
 	display: inline-block;
-	border-right-style: dotted;
-	border-right-color: white;
-	border-right-width: 1px;
+	/* border-right-style: dotted; */
+	/* border-right-color: white; */
+	/* border-right-width: 1px; */
 	/* width: 200px; */
 	display: flex;
 	flex-direction: row;
 }
 
 nav div div:hover {
-	background-color: #9ca93d;
+	/* background-color: #9ca93d; */
+	background-color: #798144;
 }
 
 nav div:hover {
-	background-color: #68685e;
+	/* background-color: #68685e; */
+	background-color: #646450;
 }
 
 nav a {
@@ -39,13 +44,13 @@ nav div div {
 }
 
 nav div div a {
-	color: white;
+	color: rgb(178, 187, 201);
 }
 
 div {
-	border-style: dotted;
-	border-color: white;
-	border-width: 1px;
+	/* border-style: dotted; */
+	/* border-color: white; */
+	/* border-width: 1px; */
 
 	display: flex;
 	flex-direction: column;
@@ -57,14 +62,19 @@ section {
 }
 
 span {
-	border-style: dashed;
-	border-color: #aaaaaa;
-	border-width: 1px;
-	border-bottom-width: 0px;
-	border-right-width: 0px;
+	/* border-style: dashed; */
+	/* border-color: #aaaaaa; */
+	/* border-width: 1px; */
+	/* border-bottom-width: 0px; */
+	/* border-right-width: 0px; */
 }
 
 a {}
+
+.verses,
+a {
+	color: rgb(153, 168, 183);
+}
 
 /* nav div div:first-child {
   background-color: black;
@@ -81,27 +91,35 @@ nav {
 /* mouse-over:hover = color  */
 div:hover {
 	/* background-color: #acae84; */
-	background-color: #e5e6e0;
+	/* background-color: #e5e6e0; */
+	/* background-color: #68685e; */
+	background-color: #42423c;
 }
 
 div div:hover {
-	background-color: #e2e2db;
+	/* background-color: #e2e2db; */
+	/* background-color: #68685e; */
+	background-color: #42423c;
 }
 
 div div div:hover {
-	background-color: #fefff0;
+	/* background-color: #fefff0; */
+	background-color: #3f3f3a;
 }
 
 div div div div:hover {
-	background-color: #f1eee7;
+	/* background-color: #f1eee7; */
+	background-color: #52524a;
 }
 
 div div div div div:hover {
-	background-color: #f7f6f4;
+	/* background-color: #f7f6f4; */
+	background-color: #5c5c53;
 }
 
 .lookup-word {
-	background-color: #bba9f0;
+	background-color: #302e36;
+	/* font-size: x-large; */
 }
 
 .prevent-select {
@@ -114,7 +132,8 @@ div div div div div:hover {
 }
 
 .lookup-summary {
-	background-color: #cac4b7;
+	background-color: #423f39;
+	color: #a2a28b;
 	font-size: large;
 }
 
@@ -123,6 +142,10 @@ div div div div div:hover {
 	flex-direction: row;
 	max-width: 70%;
 	flex-wrap: wrap;
+}
+
+.pathid {
+	color: antiquewhite;
 }
 
 .path-trace-block {
@@ -142,7 +165,7 @@ div div div div div:hover {
 }
 
 div.path-trace-block:last-child :last-child span {
-	background-color: rgb(216, 209, 148);
+	background-color: rgb(112, 109, 89);
 }
 
 .verses div {
@@ -150,7 +173,9 @@ div.path-trace-block:last-child :last-child span {
 }
 
 .lookup-words div {
+	padding-top: 30px;
 	font-size: x-large;
+	color: #ACACAC;
 }
 
 .ref-nav a {
@@ -215,7 +240,7 @@ div#joystick {
 
 #joystick button {
 	font-size: xxx-large;
-	width:200px;
+	width: 200px;
 }
 
 .container {

@@ -10,7 +10,7 @@
 
 {% block content %}
 
-<span title="Path started at">@{{session.uid }}</span>
+<span class="pathid" title="Path started at">@{{session.uid }}</span>
 <div class="path-trace">
 
 	{% for ref in session.paths %}
@@ -51,7 +51,7 @@
 </div>
 <div class="verses" style="list-style-type: none">
 	{% for item in data %}
-	<div class="border my-3">
+	<div class="xxxborder my-3">
 		<div class="text-secondary">
 			<span class="prevent-select">
 				<a href="/source/{{item['attrib'].id}}">
@@ -60,7 +60,7 @@
 				<!-- #{{fire[item['attrib'].id]}} -->
 			</span>
 			{% if show_verses %}
-			<div>{{item.text}}</div>
+			<div class="verses">{{item.text}}</div>
 			{% endif %}
 
 
