@@ -20,6 +20,8 @@ from lxml import etree
 import re
 import math
 
+from collections import OrderedDict
+
 title = os.environ['Title'] = 'DEV_MODE'
 # os.environ.get('Title')
 
@@ -33,7 +35,6 @@ root_en = etree.parse('bible.xml')
 root_pl = etree.parse('polish.xml')
 root = root_pl
 # root = ET.fromstring(data)
-from collections import OrderedDict
 
 wordstat = OrderedDict()
 with open('count_1ws.txt', 'r') as file:
@@ -118,6 +119,22 @@ def download(name='Viewed'):
 		# print(result)
 	return jsonify(result)
 
+@app.route('/lang/<lang>/<to>')
+def set_lang(lang, to=None):
+	session['lang'] = lang
+	print(to)	
+	if to:
+		return redirect('/source/'+ to)
+	else:
+		return redirect('/')
+
+def get_root():
+	lang = session.get('lang', 'en')
+	if lang == 'pl':
+		return root_pl
+	else:
+		return root_en
+
 def word_search(word):
 	# ns = {"re": "http://exslt.org/regular-expressions"}	
 	if len(w := word.split(',')) > 1:
@@ -125,7 +142,7 @@ def word_search(word):
 	xpath_expression = f".//seg[@type='verse'][contains(text(),'{word}')]"  #[not(contains(@id, '{ref}'))]"
 	#TODO fix search
 	# print(xpath_expression)
-	locations = root.xpath(xpath_expression)  #, namespaces=ns)
+	locations = get_root().xpath(xpath_expression)  #, namespaces=ns)
 	#todo fix
 	# while w
 	locations = list(filter(lambda l: word.lower() in l.text.lower(), locations))
@@ -158,6 +175,9 @@ def leave_trace(session, request):
 		session.modified = True
 
 	print(session['paths'])
+
+	if 'lang' not in session:
+		session['lang'] = 'en' 
 
 
 @app.route('/look_up/<word>')
@@ -193,7 +213,7 @@ def living_water(ref=None):
 	if verse:
 		show_verses = True
 		xpath_expression = f".//seg[@type='verse'][@id='b.{book}.{chapter}.{verse}']"
-		elements = root.xpath(xpath_expression)
+		elements = get_root().xpath(xpath_expression)
 		v: str = elements[0].text
 		# words = v.strip().lower().split('')
 		# Regular expression to match words (alphanumeric characters)
@@ -246,7 +266,7 @@ def living_water(ref=None):
 	elif chapter:
 		show_verses = True
 		xpath_expression = f".//seg[@type='verse'][starts-with(@id,'b.{book}.{chapter}')]"
-		elements = root.xpath(xpath_expression)
+		elements = get_root().xpath(xpath_expression)
 		with SessionLocal() as db:
 			for elem in elements:
 				if elem is not None:
@@ -260,11 +280,11 @@ def living_water(ref=None):
 	elif book:
 		# print(book)
 		xpath_expression = f".//div[@type='chapter'][starts-with(@id,'b.{book}')]"
-		elements = root.xpath(xpath_expression)
+		elements = get_root().xpath(xpath_expression)
 		# return render_template('verses.html', data = elements)
 	else:
 		xpath_expression = f".//div[@type='book']"
-		elements = root.xpath(xpath_expression)
+		elements = get_root().xpath(xpath_expression)
 
 	return render_template('verses.html',
 	                       data=elements,

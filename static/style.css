@@ -7,7 +7,7 @@ body {
 	background-color: #3c3c35;
 }
 
-#current-font {
+#current-font, #current-lang {
 	font-size: medium;
 	color: antiquewhite;
 }

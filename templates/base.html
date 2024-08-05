@@ -26,6 +26,10 @@
         <a id='change-font' href="#" onclick="cycleFont()">font</a>
 				<span id="current-font"><script>document.write(document.body.style.fontFamily)</script></span>
       </div>
+      <div>
+        <a id='change-lang' href="/lang/{{'pl' if session['lang']=='en' else 'en'}}/{{request.path.split('/',2)[2]}}" >lang</a>
+				<span id="current-lang">{{session['lang']}}</span>
+      </div>
     </div>
 
   </nav>
@@ -52,5 +56,15 @@ function cycleFont() {
   document.body.style.fontFamily= `${fonts[fontIndex]}`;
 	document.getElementById('current-font').textContent = fonts[fontIndex].slice(0,10)
 }
+// const colors = ['courier','coursive', 'times new roman', 'georgia', 'arial', 'monospace'];
+// let colorIndex = 0;
+
+// function cycleColor() {
+//   const element = document.getElementsByTagName('BODY');
+// 	console.log(element)
+//   colorIndex = (colorIndex + 1) % colors.length;
+//   document.body.style.color= `${fonts[fontIndex]}`;
+// 	document.getElementById('current-font').textContent = fonts[fontIndex].slice(0,10)
+// }
   </script>
 </body>
