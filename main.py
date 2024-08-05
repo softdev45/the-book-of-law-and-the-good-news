@@ -119,6 +119,7 @@ def download(name='Viewed'):
 		# print(result)
 	return jsonify(result)
 
+@app.route('/lang/<lang>/')
 @app.route('/lang/<lang>/<to>')
 def set_lang(lang, to=None):
 	session['lang'] = lang
