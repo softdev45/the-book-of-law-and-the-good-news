@@ -125,6 +125,10 @@ div div div div div:hover {
 .lookup-word {
 	background-color: #302e36;
 	/* font-size: x-large; */
+	padding-bottom:20px;
+	padding-top:20px;
+	font-size: x-large;
+	color: #ACACAC;
 }
 
 .prevent-select {
@@ -178,7 +182,7 @@ div.path-trace-block:last-child :last-child span {
 }
 
 .lookup-words div {
-	padding-top: 30px;
+	padding-top: 20px;
 	font-size: x-large;
 	color: #ACACAC;
 }

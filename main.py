@@ -33,7 +33,7 @@ app.secret_key = '1234!@#$qwerQWER'
 # data = bible.read()
 root_en = etree.parse('bible.xml')
 root_pl = etree.parse('polish.xml')
-root = root_pl
+root = root_en
 # root = ET.fromstring(data)
 
 wordstat = OrderedDict()
