@@ -1,10 +1,15 @@
 body {
 	/* font-family: monospace; */
-	font-family: cursive;
+	/* font-family: cursive; */
 	/* background-color: #f2f2ed; */
 	/* background-color: #68685e; */
 	/* background-color: #272725; */
 	background-color: #3c3c35;
+}
+
+#current-font {
+	font-size: medium;
+	color: antiquewhite;
 }
 
 nav div {

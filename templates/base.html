@@ -8,7 +8,7 @@
 	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 
-<body>
+<body style="font-family: monospace;">
   <nav>
     <!-- <div> -->
 
@@ -21,6 +21,10 @@
       </div>
       <div>
         <a href="/revelation">rev</a>
+      </div>
+      <div>
+        <a id='change-font' href="#" onclick="cycleFont()">font</a>
+				<span id="current-font"><script>document.write(document.body.style.fontFamily)</script></span>
       </div>
     </div>
 
@@ -38,6 +42,15 @@
 
   </section>
   <script>
+const fonts = ['courier','coursive', 'times new roman', 'georgia', 'arial', 'monospace'];
+let fontIndex = 0;
 
+function cycleFont() {
+  const element = document.getElementsByTagName('BODY');
+	console.log(element)
+  fontIndex = (fontIndex + 1) % fonts.length;
+  document.body.style.fontFamily= `${fonts[fontIndex]}`;
+	document.getElementById('current-font').textContent = fonts[fontIndex].slice(0,10)
+}
   </script>
 </body>
