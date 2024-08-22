@@ -175,7 +175,7 @@ def leave_trace(session, request):
 		session['paths'].append(request.path)
 		session.modified = True
 
-	print(session['paths'])
+	# print(session['paths'])
 
 	if 'lang' not in session:
 		session['lang'] = 'en' 
@@ -231,7 +231,11 @@ def living_water(ref=None):
 		words = sorted(words, key=lambda e: e[1])
 		# print(words)
 		# words = words[0:int(len(words) * 0.25)]
-		words = words[0:int(len(words) * 0.25)]
+		# print(words)
+		factor = 0.25
+		if len(words) <= 12:
+			factor = 0.8
+		words = words[0:int(len(words) * factor)]
 
 		# print('#1')
 		# print(words)
