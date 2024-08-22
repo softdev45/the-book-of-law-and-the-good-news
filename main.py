@@ -108,6 +108,7 @@ def estimate_freq_index(word):
 			return (original, wordstat[word])
 	return 0
 
+
 @app.route('/db')
 @app.route('/db/<name>')
 def download(name='Viewed'):
@@ -119,15 +120,17 @@ def download(name='Viewed'):
 		# print(result)
 	return jsonify(result)
 
+
 @app.route('/lang/<lang>/')
 @app.route('/lang/<lang>/<to>')
 def set_lang(lang, to=None):
 	session['lang'] = lang
-	print(to)	
+	print(to)
 	if to:
-		return redirect('/source/'+ to)
+		return redirect('/source/' + to)
 	else:
 		return redirect('/')
+
 
 def get_root():
 	lang = session.get('lang', 'en')
@@ -136,8 +139,9 @@ def get_root():
 	else:
 		return root_en
 
+
 def word_search(word):
-	# ns = {"re": "http://exslt.org/regular-expressions"}	
+	# ns = {"re": "http://exslt.org/regular-expressions"}
 	if len(w := word.split(',')) > 1:
 		word = w[0]
 	xpath_expression = f".//seg[@type='verse'][contains(text(),'{word}')]"  #[not(contains(@id, '{ref}'))]"
@@ -178,7 +182,7 @@ def leave_trace(session, request):
 	# print(session['paths'])
 
 	if 'lang' not in session:
-		session['lang'] = 'en' 
+		session['lang'] = 'en'
 
 
 @app.route('/look_up/<word>')
@@ -229,6 +233,7 @@ def living_water(ref=None):
 		words = list(result)
 		words = list(set(words))
 		words = sorted(words, key=lambda e: e[1])
+		words = [word for word in words if word[1] > 1]
 		# print(words)
 		# words = words[0:int(len(words) * 0.25)]
 		# print(words)
@@ -247,8 +252,12 @@ def living_water(ref=None):
 			start_len = len(words[i][1])
 			thres = 77 - int(math.log(start_len * (i + 1))**1.81)
 			print(words[i][0], ' ', thres, 'start=', start_len)
-			while len(words[i][1]) > thres:
-				words[i][1] = words[i][1][::2]
+			if thres < 0:
+				# thres = 0
+				words[i][1] = []
+			else:
+				while len(words[i][1]) > thres:
+					words[i][1] = words[i][1][::2]
 
 		# for i in range(0, len(words)):
 		# 	print(words)
@@ -257,7 +266,7 @@ def living_water(ref=None):
 		# 	if len(result) > 30:
 		# 		result = result[:30]
 		# 	words[i][1] = result
-
+		words = list(filter(lambda word: len(word[1]) > 0, words))
 		words = sorted(words, key=lambda e: len(e[1]))
 
 		with SessionLocal() as db:
