@@ -228,6 +228,8 @@ def living_water(ref=None):
 			result = map(lambda word: estimate_freq_index(word), words)
 		words = list(result)
 		words = list(set(words))
+		print(words) 
+		words = list(filter( lambda el: type(el)==tuple, words))
 		words = sorted(words, key=lambda e: e[1])
 		# print(words)
 		# words = words[0:int(len(words) * 0.25)]
@@ -245,7 +247,7 @@ def living_water(ref=None):
 
 		for i in range(0, len(words)):
 			start_len = len(words[i][1])
-			thres = 77 - int(math.log(start_len * (i + 1))**1.81)
+			thres = 77 - int(math.log(start_len * (i + 1))**1.71)
 			print(words[i][0], ' ', thres, 'start=', start_len)
 			while len(words[i][1]) > thres:
 				words[i][1] = words[i][1][::2]
@@ -394,6 +396,8 @@ def messages():
 	result = []
 	with SessionLocal() as db:
 		result = db.query(Request).all()
+        for r in result:
+            print(r)
 		# print(result)
 	return render_template('list.html', data=reversed(result))  #, form = form)
 

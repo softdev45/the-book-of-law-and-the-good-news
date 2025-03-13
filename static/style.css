@@ -66,6 +66,14 @@ section {
 	flex-direction: column;
 }
 
+section.content {
+	color: #AeAeAe;
+
+}
+label {
+	display:block;
+}
+
 span {
 	/* border-style: dashed; */
 	/* border-color: #aaaaaa; */

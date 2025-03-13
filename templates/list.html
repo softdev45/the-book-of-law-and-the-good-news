@@ -5,7 +5,9 @@
 <div style="list-style-type: none">
     {% for item in data %} {% if item.public and True or item.verified%}
     <div class="border my-3">
-        <div class="text-secondary">{{ item.request_data }}<div>{{item.location}}</div> </div>
+	    <div class="text-secondary"><div>{{ item.request_data }}</div>
+		    <div><a href={{item.location}}>{{item.location}}</a></div>
+	    </div>
 				
 				<!-- <form method="POST" action='/request/delete/{{item.id}}'>
 					<input type="submit" value="delete"/>
