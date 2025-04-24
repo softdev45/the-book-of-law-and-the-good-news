@@ -57,6 +57,9 @@ class RequestForm(ModelForm):
     # request_data = TextAreaField('request_data')
     class Meta:
         model = Request
+        labels = {
+                "request_data":"describe request",
+                }
 
 
 def get_db():
@@ -94,7 +97,8 @@ def make_fire(ref):
 
 @app.route('/plan')
 def doc():
-    return render_template('doc.html')
+    words =[]
+    return render_template('doc.html', words=words)
 
 
 def estimate_freq_index(word):
@@ -299,7 +303,8 @@ def living_water(ref=None):
                            ref=steps,
                            verse=verse,
                            words=words,
-                           fire=fire)
+                           fire=fire,
+                           change_lang=True)
     # return render_template('verses.html', data = elements)
 
 

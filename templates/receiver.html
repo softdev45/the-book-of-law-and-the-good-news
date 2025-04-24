@@ -6,7 +6,8 @@
 <div class="my-3">Please, provide text data to feed-forward your request:</div>
 <form method="POST" action="/request/create">
     <!-- <textarea name="text_data"/> </textarea> -->
-    {{ form.csrf_token }} {% for field in form if not field.name in
+    {{ form.csrf_token }} 
+    {% for field in form if not field.name in
     ["csrf_token","verified"] %}
     <p>{{ field.label }}: {{ field }} <b>{{ " ".join(field.errors) }}</b></p>
     {% endfor %}

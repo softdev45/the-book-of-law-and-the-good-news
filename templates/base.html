@@ -23,17 +23,21 @@
       <div> 
         <a href="/plan">doc</a>
       </div>
+      <!--
       <div>
         <a href="/revelation">rev</a>
       </div>
+      -->
       <div>
         <a id='change-font' href="#" onclick="cycleFont()">font</a>
 				<span id="current-font"><script>document.write(document.body.style.fontFamily)</script></span>
       </div>
+      {% if change_lang %}
       <div>
         <a id='change-lang' href="/lang/{{'pl' if session['lang']=='en' else 'en'}}/{{request.path.split('/',2)[2]}}" >lang</a>
 				<span id="current-lang">{{session['lang']}}</span>
       </div>
+      {% endif %}
     </div>
 
   </nav>

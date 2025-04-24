@@ -10,7 +10,12 @@
 
 {% block content %}
 
-<span class="pathid" title="Path started at">@{{session.uid }}</span>
+<span class="pathid" title="Path started at">id:@{{session.uid }}
++ possible entry points: 
+<a href="/source/b.JOS.1.8"> Jos 1.8 </a>|
+<a href="/source/b.DEU.11.19"> Deu 11.19 </a>|
+<a href="/source/b.JOH.8.31"> Joh 8.31 </a>
+</span>
 <div class="path-trace">
 
 	{% for ref in session.paths %}

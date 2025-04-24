@@ -5,9 +5,80 @@
   <h1>{% block title %}Doc{% endblock %}</h1>
 {% endblock %}
 
+{% set links = [
+'https://i.postimg.cc/0jPj7jFq/Jesus-fulfills1.png',
+'https://i.postimg.cc/gjsJsdbL/Jesus-fulfills2.png',
+'https://i.postimg.cc/1Rrfs0VR/Jesus-fulfills3.png',
+'https://i.postimg.cc/HnYWVK8Y/Trust-in-God-Almighty-and-Jesus-Christ-1b.png',
+'https://i.postimg.cc/8cZpWHLh/Trust-in-God-Almighty-and-Jesus-Christ-2.png',
+'https://i.postimg.cc/wx2TS6n7/Trust-in-God-Almighty-and-Jesus-Christ-3.png',
+'https://i.postimg.cc/6qr9jcr2/about-the-truth-2.png',
+'https://i.postimg.cc/GtwLxVyn/algorithm-of-love.png',
+'https://i.postimg.cc/HkZThVy2/all-the-riches.png',
+'https://i.postimg.cc/KcPxy9T4/believe-in-Him.png',
+'https://i.postimg.cc/gcHF7x9Z/camel-through-eye-of-a-needle.png',
+'https://i.postimg.cc/RCHqJQHz/camel-through-eye-of-a-needle-bw.png',
+'https://i.postimg.cc/MGgqzNtf/chosen.png',
+'https://i.postimg.cc/V6jQm6d2/detestable-in-gods-sight.png',
+'https://i.postimg.cc/GmqpnXZv/do-not-live-in-sin.png',
+'https://i.postimg.cc/cJvdy07N/forive-them.png',
+'https://i.postimg.cc/W1tBtSdG/free-from-law-by-christ.png',
+'https://i.postimg.cc/139zdkY9/free-from-law-by-christ-bw.png',
+'https://i.postimg.cc/8PkQgTDn/gifts-of-spirit.png',
+'https://i.postimg.cc/63D31TFS/gifts-of-spirit-bw.png',
+'https://i.postimg.cc/1tNR6s4K/God-seeks-worshippers.png',
+'https://i.postimg.cc/QC3DT72X/gossip.png',
+'https://i.postimg.cc/m2SL7dZK/I-and-the-Father-are-one.png',
+'https://i.postimg.cc/JnJm0xd6/jesus-the-only-teach-and-master.png',
+'https://i.postimg.cc/pLTHzR6n/listen-to-Him.png',
+'https://i.postimg.cc/NfbtK5pc/listen-to-Him-unlessdraws-Him.png',
+'https://i.postimg.cc/gJ9FCRkv/love-your-enemies.png',
+'https://i.postimg.cc/Vvmy68tv/luk17-punishment.png',
+'https://i.postimg.cc/GhR380Rk/my-wonds-shall-not-pass-away.png',
+'https://i.postimg.cc/jqPdSxpx/one-thing-is-neccessary.png',
+'https://i.postimg.cc/PqJ5Xmj9/parables-mat13.png',
+'https://i.postimg.cc/JhkS5nct/praying.png',
+'https://i.postimg.cc/4NRy676H/praying-bw.png',
+'https://i.postimg.cc/GmhcKkHt/psa45.png',
+'https://i.postimg.cc/Xq8RBzK8/rev-21-1-7.png',
+'https://i.postimg.cc/dtWMqgVQ/rev-5.png',
+'https://i.postimg.cc/Dz43p5Fv/rev-6-firey-horse.png',
+'https://i.postimg.cc/qqxTXRr2/rev22-10-15.png',
+'https://i.postimg.cc/Vvn6ym8N/seeks-worshippers.png',
+'https://i.postimg.cc/y8bzTtMp/shown-mercy-to-ignorant.png',
+'https://i.postimg.cc/RVv9Cc1d/spirit-gives-life.png',
+'https://i.postimg.cc/zBLvjT2K/spring-of-water.png',
+'https://i.postimg.cc/FKC13Tph/unclean-spirit-strategty.png',
+'https://i.postimg.cc/BvzQXXZ6/who-can-follow-Jesus.png',
+'https://i.postimg.cc/t4fL6P6L/you-alone-are-holy.png'
+] %}
+
 {% block content %}
+
+<div style="align-items: center;">
+<iframe class="rumble" width="640" height="360" src="https://rumble.com/embed/v6pz3u3/?pub=4l8uc9" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<div class="blocks">
+	<div>
+		<a class="alink"  href="https://www.patreon.com/lightDistributionChannel_in_TheTrueVine">patreon</a>
+	</div>
+	<div>
+		<a class="alink"  href="https://www.youtube.com/channel/UCNF4j6E_Wje20B4vDxL07nw"> youtube</a>
+	</div>
+
+	<div>
+		<a class="alink"  href="/revelation">Revelation</a>
+	</div>
+</div>
+
 <section>
   <img src="{{ url_for('static', filename='BloodOfChrist.png') }}" alt="Blood of Christ" style="object-fit:contain;">
+
+{% for i in links %}
+<img src="{{i}}"/>
+{% endfor %}
+
   <img src="{{ url_for('static', filename='gathering-together-3.svg') }}" alt="My SVG Image" style="object-fit:contain;">
   <img src="{{ url_for('static', filename='project_s_lifecycle_rescaled_to_fit.svg') }}" alt="My SVG Image" style="object-fit:contain;">
 </section>
